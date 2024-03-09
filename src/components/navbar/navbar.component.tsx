@@ -15,7 +15,6 @@ const Navbar = () => {
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
     return (
         <nav className="bg-blue-700 border-b border-blue-500">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -152,12 +151,12 @@ const Navbar = () => {
                                         role="menu"
                                         aria-orientation="vertical"
                                         aria-labelledby="user-menu-button"
-                                        tabIndex="-1">
+                                        tabIndex={-1}>
                                         <Link
                                             href="/profile"
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
-                                            tabIndex="-1"
+                                            tabIndex={-1}
                                             id="user-menu-item-0">
                                             Your Profile
                                         </Link>
@@ -165,14 +164,14 @@ const Navbar = () => {
                                             href="/properties/saved"
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
-                                            tabIndex="-1"
+                                            tabIndex={-1}
                                             id="user-menu-item-2">
                                             Saved Properties
                                         </Link>
                                         <button
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
-                                            tabIndex="-1"
+                                            tabIndex={-1}
                                             id="user-menu-item-2">
                                             Sign Out
                                         </button>

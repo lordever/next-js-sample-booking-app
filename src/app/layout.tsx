@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import '@/assets/styles/global.css';
 import Navbar from "@/components/navbar/navbar.component";
+import Footer from "@/components/footer/footer.component";
 
 export const metadata: Metadata = {
     title: "LordEver | Sample booking app",
@@ -18,6 +19,7 @@ export default function MainLayout({
             <body>
                 <Navbar />
                 <main>{children}</main>
+                <Footer />
             </body>
         </html>
     );
