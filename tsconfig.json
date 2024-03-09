@@ -24,6 +24,6 @@
   "include": [
     "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": [
-    "next-js-sample-bookmarks-app/node_modules"
+    "next-js-sample-booking-app/node_modules"
   ]
 }
