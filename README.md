@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is the sample project when I lernt next-js.
+
+The author of course is: Brad Traversy (https://www.youtube.com/traversymedia)
 
 ## Getting Started
 
