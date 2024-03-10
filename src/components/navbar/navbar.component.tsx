@@ -1,19 +1,27 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import LogoImage from "@/assets/images/logo-white.png";
 import ProfileDefaultImage from "@/assets/images/profile.png";
 import Link from "next/link";
 import {FaGoogle} from "react-icons/fa"
 import {usePathname} from "next/navigation";
+import {useMediaQuery} from "react-responsive";
 
 const Navbar = () => {
 
     const pathname = usePathname();
+    const isLargeScreen = useMediaQuery({minWidth: 768});
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (isLargeScreen) {
+            setMobileMenuOpen(false);
+        }
+    }, [isLargeScreen])
 
     return (
         <nav className="bg-blue-700 border-b border-blue-500">
