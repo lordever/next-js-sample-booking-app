@@ -5,6 +5,7 @@ export interface PropertyModel {
     beds: number;
     baths: number;
     square_feet: number;
+    createdAt: string;
     rates: {
         monthly?: number;
         weekly?: number;
