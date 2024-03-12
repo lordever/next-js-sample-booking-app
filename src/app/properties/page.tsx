@@ -1,21 +1,7 @@
 import React from 'react';
 import PropertyCard from "@/components/property-card/property.card.component";
 import {PropertyModel} from "@/models/property.model";
-
-
-async function fetchProperties() {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`);
-
-        if (!res.ok) {
-            throw new Error("Failed to fetch properties");
-        }
-
-        return res.json();
-    } catch (error) {
-        console.log("Failed to fetch properties", error);
-    }
-}
+import {fetchProperties} from "@/services/property.service";
 
 const PropertiesPage = async () => {
     const properties = await fetchProperties();
