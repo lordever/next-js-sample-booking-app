@@ -19,3 +19,23 @@ export async function fetchProperties() {
         return [];
     }
 }
+
+export async function fetchPropertyById(id: string) {
+    try {
+        //Handle the case when domain is not available yet
+        if (!API_DOMAIN) {
+            return null;
+        }
+
+        const res = await fetch(`${API_DOMAIN}/properties/${id}`);
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch property by id: " + id);
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error("Failed to fetch property by id: " + id, error);
+        return [];
+    }
+}
