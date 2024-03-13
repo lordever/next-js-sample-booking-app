@@ -6,6 +6,7 @@ export interface PropertyModel {
     baths: number;
     square_feet: number;
     createdAt: string;
+    description: string;
     rates: {
         monthly?: number;
         weekly?: number;
@@ -18,4 +19,5 @@ export interface PropertyModel {
         zipcode: string;
     }
     images: string[];
+    amenities: string[];
 }
