@@ -8,6 +8,7 @@ import PropertyHeaderImage from "@/components/property-header-image/property-hea
 import Link from "next/link";
 import PropertyDetails from "@/components/property-details/property-details.component";
 import {FaArrowLeft} from "react-icons/fa"
+import Spinner from "@/components/spinner/spinner.component";
 
 const PropertyPage = () => {
     const {id} = useParams<{ id: string }>();
@@ -41,6 +42,7 @@ const PropertyPage = () => {
 
     return (
         <>
+            {loading && <Spinner loading={loading}/>}
             {!loading && property && (
                 <>
                     <PropertyHeaderImage image={property.images[0]}/>
@@ -57,7 +59,7 @@ const PropertyPage = () => {
                     <section className="bg-blue-50">
                         <div className="container m-auto py-10 px-6">
                             <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
-                                <PropertyDetails property={property} />
+                                <PropertyDetails property={property}/>
 
                                 <aside className="space-y-4">
                                     <button
