@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const Spinner: FC<{ loading: boolean }> = ({loading}) => {
+const Spinner: FC<{ loading: boolean, size?: number }> = ({loading, size = 150}) => {
     return (
         <div style={{
             display: 'flex',
@@ -14,7 +14,7 @@ const Spinner: FC<{ loading: boolean }> = ({loading}) => {
             <ClipLoader
                 color="#3b82f6"
                 loading={loading}
-                size={150}
+                size={size}
                 aria-label="Loading Spinner"
             />
         </div>

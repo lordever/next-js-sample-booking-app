@@ -8,10 +8,10 @@ import Link from "next/link";
 import {FaGoogle} from "react-icons/fa"
 import {usePathname} from "next/navigation";
 import {useMediaQuery} from "react-responsive";
-import {ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession} from "next-auth/react";
+import {ClientSafeProvider, getProviders, LiteralUnion, signIn, signOut, useSession} from "next-auth/react";
 import {BuiltInProviderType} from "next-auth/providers";
 import PropagateLoading from "@/components/propagate-loading/propagate-loading.component";
-import loading from "@/app/loading";
+import Spinner from "@/components/spinner/spinner.component";
 
 type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
 const Navbar = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
     const pathname = usePathname();
     const isLargeScreen = useMediaQuery({minWidth: 768});
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
     const [providers, setProviders] = useState<ProvidersType>(null);
 
     useEffect(() => {
@@ -110,7 +110,12 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {status === "loading" && <PropagateLoading loading/>}
+                    {status === "loading" && (
+                        <div className="hidden md:block md:ml-6">
+                            <Spinner size={30} loading/>
+                        </div>
+                    )}
+
                     {status === "unauthenticated" && (
                         <div className="hidden md:block md:ml-6">
                             <div className="flex items-center">
@@ -129,7 +134,7 @@ const Navbar = () => {
                         </div>
                     )}
 
-                    {status !== "loading" && status === "authenticated" ? (
+                    {status === "authenticated" && (
                         <div
                             className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                             <Link href="/messages" className="relative group">
@@ -166,7 +171,7 @@ const Navbar = () => {
                                         id="user-menu-button"
                                         aria-expanded="false"
                                         aria-haspopup="true"
-                                        onClick={() => setProfileMenuOpen((prev) => !prev)}
+                                        onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                                     >
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
@@ -189,6 +194,7 @@ const Navbar = () => {
                                         aria-labelledby="user-menu-button"
                                         tabIndex={-1}>
                                         <Link
+                                            onClick={() => setIsProfileMenuOpen(false)}
                                             href="/profile"
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
@@ -197,6 +203,7 @@ const Navbar = () => {
                                             Your Profile
                                         </Link>
                                         <Link
+                                            onClick={() => setIsProfileMenuOpen(false)}
                                             href="/properties/saved"
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
@@ -205,6 +212,10 @@ const Navbar = () => {
                                             Saved Properties
                                         </Link>
                                         <button
+                                            onClick={() => {
+                                                setIsProfileMenuOpen(false);
+                                                signOut();
+                                            }}
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
                                             tabIndex={-1}
@@ -215,7 +226,7 @@ const Navbar = () => {
                                 )}
                             </div>
                         </div>
-                    ) : <PropagateLoading loading/>}
+                    )}
                 </div>
             </div>
 
@@ -240,7 +251,6 @@ const Navbar = () => {
                             </Link>
                         )}
 
-                        {status === "loading" && <PropagateLoading loading/>}
                         {status === "unauthenticated" && (
                             <>
                                 {providers && Object.values(providers).map((provider) => (
