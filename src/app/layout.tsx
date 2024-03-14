@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import '@/assets/styles/global.css';
 import Navbar from "@/components/navbar/navbar.component";
 import Footer from "@/components/footer/footer.component";
+import AuthProvider from "@/components/auth-provider/auth-provider.component";
 
 export const metadata: Metadata = {
     title: "LordEver | Sample booking app",
@@ -15,12 +16,14 @@ export default function MainLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body>
-                <Navbar />
-                <main>{children}</main>
-                <Footer />
-            </body>
-        </html>
+        <AuthProvider>
+            <html lang="en">
+                <body>
+                    <Navbar />
+                    <main>{children}</main>
+                    <Footer />
+                </body>
+            </html>
+        </AuthProvider>
     );
 }
