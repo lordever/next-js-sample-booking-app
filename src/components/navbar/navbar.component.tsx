@@ -8,20 +8,35 @@ import Link from "next/link";
 import {FaGoogle} from "react-icons/fa"
 import {usePathname} from "next/navigation";
 import {useMediaQuery} from "react-responsive";
+import {ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession} from "next-auth/react";
+import {BuiltInProviderType} from "next-auth/providers";
 
+type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
 const Navbar = () => {
+
+    const {data: session} = useSession();
 
     const pathname = usePathname();
     const isLargeScreen = useMediaQuery({minWidth: 768});
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [providers, setProviders] = useState<ProvidersType>(null);
+
+    useEffect(() => {
+        const setAuthProviders = async () => {
+            const res = await getProviders();
+            setProviders(res);
+        };
+
+        setAuthProviders();
+    }, []);
 
     useEffect(() => {
         if (isLargeScreen) {
             setMobileMenuOpen(false);
         }
     }, [isLargeScreen])
+
 
     return (
         <nav className="bg-blue-700 border-b border-blue-500">
@@ -81,7 +96,7 @@ const Navbar = () => {
                                     className={`${pathname === "/properties" ? 'bg-gray-900' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}>
                                     Properties
                                 </Link>
-                                {isLoggedIn && (
+                                {session && (
                                     <Link
                                         href="/properties/add"
                                         className={`${pathname === "/properties/add" ? 'bg-gray-900' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}>
@@ -92,19 +107,25 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {!isLoggedIn && (
+                    {!session && (
                         <div className="hidden md:block md:ml-6">
                             <div className="flex items-center">
-                                <button
-                                    className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                                    <FaGoogle className="text-white mr-2"/>
-                                    <span>Login or Register</span>
-                                </button>
+                                {providers && Object.values(providers).map((provider) => (
+                                    <button
+                                        key={provider.id}
+                                        onClick={() => {
+                                            signIn(provider.id)
+                                        }}
+                                        className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+                                        <FaGoogle className="text-white mr-2"/>
+                                        <span>Login or Register</span>
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     )}
 
-                    {isLoggedIn && (
+                    {session && (
                         <div
                             className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                             <Link href="/messages" className="relative group">
@@ -204,7 +225,7 @@ const Navbar = () => {
                             className={`${pathname === "/properties" ? "bg-gray-900" : ""} text-white block rounded-md px-3 py-2 text-base font-medium`}>
                             Properties
                         </Link>
-                        {isLoggedIn && (
+                        {session && (
                             <Link
                                 href="/properties/add"
                                 className={`${pathname === "/properties/add" ? "bg-gray-900" : ""} text-white block rounded-md px-3 py-2 text-base font-medium`}>
@@ -212,12 +233,19 @@ const Navbar = () => {
                             </Link>
                         )}
 
-                        {!isLoggedIn && (
-                            <button
-                                className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                                <FaGoogle className="text-white mr-2"/>
-                                <span>Login or Register</span>
-                            </button>
+                        {!session && (<>
+                                {providers && Object.values(providers).map((provider) => (
+                                    <button
+                                        key={provider.id}
+                                        onClick={() => {
+                                            signIn(provider.id)
+                                        }}
+                                        className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
+                                        <FaGoogle className="text-white mr-2"/>
+                                        <span>Login or Register</span>
+                                    </button>
+                                ))}
+                            </>
                         )}
                     </div>
                 </div>
