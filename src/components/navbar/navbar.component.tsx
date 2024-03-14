@@ -10,11 +10,13 @@ import {usePathname} from "next/navigation";
 import {useMediaQuery} from "react-responsive";
 import {ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession} from "next-auth/react";
 import {BuiltInProviderType} from "next-auth/providers";
+import PropagateLoading from "@/components/propagate-loading/propagate-loading.component";
+import loading from "@/app/loading";
 
 type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
 const Navbar = () => {
 
-    const {data: session} = useSession();
+    const {data: session, status} = useSession();
     const profileImage = session?.user?.image;
 
     const pathname = usePathname();
@@ -108,7 +110,8 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {!session && (
+                    {status === "loading" && <PropagateLoading loading/>}
+                    {status === "unauthenticated" && (
                         <div className="hidden md:block md:ml-6">
                             <div className="flex items-center">
                                 {providers && Object.values(providers).map((provider) => (
@@ -126,7 +129,7 @@ const Navbar = () => {
                         </div>
                     )}
 
-                    {session && (
+                    {status !== "loading" && status === "authenticated" ? (
                         <div
                             className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                             <Link href="/messages" className="relative group">
@@ -212,7 +215,7 @@ const Navbar = () => {
                                 )}
                             </div>
                         </div>
-                    )}
+                    ) : <PropagateLoading loading/>}
                 </div>
             </div>
 
@@ -237,7 +240,9 @@ const Navbar = () => {
                             </Link>
                         )}
 
-                        {!session && (<>
+                        {status === "loading" && <PropagateLoading loading/>}
+                        {status === "unauthenticated" && (
+                            <>
                                 {providers && Object.values(providers).map((provider) => (
                                     <button
                                         key={provider.id}
