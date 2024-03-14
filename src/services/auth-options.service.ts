@@ -16,7 +16,7 @@ const callbacks: CallbacksOptions = {
 
         //2. Check if user exists
         const userExists = await User.findOne({email: profile.email});
-
+        console.log("USER EXISTS", userExists);
         //3. If not, then add user to database
         if (!userExists) {
             //Truncate username if too long
@@ -40,8 +40,6 @@ const callbacks: CallbacksOptions = {
         //2. Assign the user id  to the session
         if (session.user && user) {
             session.user.id = user._id.toString();
-            session.user.name = user.name;
-            session.user.email = user.email;
         }
 
         //3. return session

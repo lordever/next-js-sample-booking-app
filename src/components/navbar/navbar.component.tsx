@@ -15,6 +15,7 @@ type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSaf
 const Navbar = () => {
 
     const {data: session} = useSession();
+    const profileImage = session?.user?.image;
 
     const pathname = usePathname();
     const isLargeScreen = useMediaQuery({minWidth: 768});
@@ -168,8 +169,11 @@ const Navbar = () => {
                                         <span className="sr-only">Open user menu</span>
                                         <Image
                                             className="h-8 w-8 rounded-full"
-                                            src={ProfileDefaultImage}
-                                            alt=""/>
+                                            src={profileImage || ProfileDefaultImage}
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                        />
                                     </button>
                                 </div>
 
