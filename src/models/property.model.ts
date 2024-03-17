@@ -12,12 +12,14 @@ export interface PropertyModel {
         weekly?: number;
         nightly?: number;
     }
-    location: {
-        city: string;
-        street: string;
-        state: string;
-        zipcode: string;
-    }
+    location: LocationModel;
     images: string[];
     amenities: string[];
+}
+
+export interface LocationModel {
+    city: string;
+    street: string;
+    state: string;
+    zipcode: string;
 }

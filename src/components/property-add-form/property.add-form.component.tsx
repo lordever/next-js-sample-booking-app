@@ -1,7 +1,9 @@
 "use client";
 
 import React, {useCallback, useState} from 'react';
-import {FormFieldsType} from "@/components/property-add-form/property-add-form.model";
+import {FormFieldsType, SellerInfo} from "@/components/property-add-form/property-add-form.model";
+import {PropertyModel} from "@/models/property.model";
+import {set} from "mongoose";
 
 
 const defaultFormFields: FormFieldsType = {
@@ -17,7 +19,7 @@ const defaultFormFields: FormFieldsType = {
     beds: 3,
     baths: 2,
     square_feet: 1800,
-    amenities: ["Wifi"],
+    amenities: [],
     rates: {
         monthly: 2000
     },
@@ -33,13 +35,61 @@ const PropertyAddForm = () => {
 
     const [fields, setFields] = useState(defaultFormFields);
 
-    const handleChange = useCallback(() => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const {name, value} = e.target;
+
+        if (name.includes(".")) {
+            const [outerKey, innerKey] = name.split(".");
+            setFields((prevFields) => {
+                const values: FormFieldsType = prevFields?.[outerKey as keyof FormFieldsType] as Partial<PropertyModel & {
+                    seller_info: SellerInfo
+                }>;
+                return {
+                    ...prevFields,
+                    [outerKey]: {
+                        ...values,
+                        [innerKey]: value
+                    }
+                }
+            })
+        } else {
+            setFields((prevFields) => ({
+                ...prevFields,
+                [name]: value
+            }));
+        }
     }, []);
 
-    const handleAmenitiesChange = useCallback(() => {
+    const handleAmenitiesChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value, checked} = e.target;
+
+        //Clone the current array
+        const updatedAmenities = fields.amenities || [];
+        if (checked) {
+            updatedAmenities.push(value);
+        } else {
+            //Remove value from array
+            const index = updatedAmenities.indexOf(value);
+            if (index !== -1) {
+                updatedAmenities.splice(index, 1);
+            }
+        }
+
+        //Update state with updated array
+        setFields((prevFields) => ({
+            ...prevFields,
+            amenities: updatedAmenities
+        }));
     }, []);
 
-    const handleImageChange = useCallback(() => {
+    const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const {files} = e.target;
+
+        //Clone images array
+        const updatedImages = fields.images || [];
+
+        //Add new files to the array
+        for(const ) {}
     }, []);
 
     return (
