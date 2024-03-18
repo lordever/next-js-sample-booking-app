@@ -85,11 +85,23 @@ const PropertyAddForm = () => {
     const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = e.target;
 
-        //Clone images array
-        const updatedImages = fields.images || [];
+        if (files?.length && files?.length > 0) {
+            //Clone images array
+            const updatedImages = fields.images || [];
 
-        //Add new files to the array
-        for(const ) {}
+            //Add new files to the array
+            for (const file of Array.from(files)) {
+                updatedImages.push(file.name);
+            }
+
+            //Update state with array of images
+            setFields((prevFields) => ({
+                ...prevFields,
+                images: updatedImages
+            }));
+        }
+
+
     }, []);
 
     return (
