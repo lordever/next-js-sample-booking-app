@@ -9,7 +9,7 @@ import Link from "next/link";
 import PropertyDetails from "@/components/property-details/property-details.component";
 import {FaArrowLeft} from "react-icons/fa"
 import Spinner from "@/components/spinner/spinner.component";
-import PropertyImages from "@/components/property-images.component";
+import PropertyImages from "@/components/property-images/property-images.component";
 
 const PropertyPage = () => {
     const {id} = useParams<{ id: string }>();
