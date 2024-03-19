@@ -3,6 +3,7 @@ import Property from "@/models/schemas/property.schema";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/services/auth-options.service";
 import {getSessionUser} from "@/services/get-session-user.service";
+import cloudinary from "@/config/cloudinary";
 
 // GET /api/properties
 export const GET = async (request: Request) => {
@@ -62,7 +63,36 @@ export const POST = async (request: Request) => {
                 phone: formData.get("seller_info.phone"),
             },
             amenities,
-            // images
+            images: [] as string[]
+        };
+
+        // Upload images to cloudinary
+        const imageUploadPromises = [];
+
+        for (const image of images) {
+            const imageBfr = await image.arrayBuffer();
+            const imageArray = Array.from(new Uint8Array(imageBfr));
+            const imageData = Buffer.from(imageArray);
+
+            //Convert the image data to base64
+            const imageBase64 = imageData.toString("base64");
+
+            //Make request to upload to cloudinary
+            const result = await cloudinary.uploader.upload(
+                `data:image/png;base64,${imageBase64}`, {
+                    folder: "property-booking"
+                }
+            );
+
+            imageUploadPromises.push(result.secure_url);
+
+            //Wait for all images to upload
+            const uploadedImages = await Promise.all(imageUploadPromises);
+
+            if (uploadedImages) {
+                //Add uploaded images to the propertyData object
+                propertyData.images = uploadedImages;
+            }
         }
 
         const newProperty = new Property(propertyData);
