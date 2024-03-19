@@ -7,7 +7,7 @@ export async function fetchProperties() {
             return [];
         }
 
-        const res = await fetch(`${API_DOMAIN}/properties`);
+        const res = await fetch(`${API_DOMAIN}/properties`, {cache: "no-store"});
 
         if (!res.ok) {
             throw new Error("Failed to fetch properties");
@@ -27,7 +27,7 @@ export async function fetchPropertyById(id: string) {
             return null;
         }
 
-        const res = await fetch(`${API_DOMAIN}/properties/${id}`);
+        const res = await fetch(`${API_DOMAIN}/properties/${id}`, {cache: "no-store"});
 
         if (!res.ok) {
             throw new Error("Failed to fetch property by id: " + id);
