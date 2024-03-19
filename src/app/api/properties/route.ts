@@ -1,7 +1,10 @@
 import connectDB from "@/config/database";
 import Property from "@/models/schemas/property.schema";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/services/auth-options.service";
+import {getSessionUser} from "@/services/get-session-user.service";
 
-// GET/api/properties
+// GET /api/properties
 export const GET = async (request: Request) => {
     try {
         await connectDB();
@@ -15,8 +18,18 @@ export const GET = async (request: Request) => {
     }
 }
 
+// POST /api/properties
 export const POST = async (request: Request) => {
     try {
+        await connectDB();
+
+        const sessionUser = await getSessionUser();
+
+        if (!sessionUser || !sessionUser.userId) {
+            return new Response("User id is required", {status: 401});
+        }
+
+        const {userId} = sessionUser;
         const formData = await request.formData();
 
         //Access all values from amenities and images
@@ -31,6 +44,7 @@ export const POST = async (request: Request) => {
             beds: formData.get("beds"),
             baths: formData.get("baths"),
             square_feet: formData.get("square_feet"),
+            owner: userId,
             location: {
                 street: formData.get("location.street"),
                 city: formData.get("location.city"),
@@ -48,12 +62,14 @@ export const POST = async (request: Request) => {
                 phone: formData.get("seller_info.phone"),
             },
             amenities,
-            images
+            // images
         }
 
-        console.log(propertyData);
+        const newProperty = new Property(propertyData);
+        await newProperty.save();
 
-        return new Response(JSON.stringify({message: "Success"}), {status: 200})
+        // return new Response(JSON.stringify({message: "Success"}), {status: 200})
+        return Response.redirect(`${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`);
     } catch (e) {
         return new Response("Failed to add property", {status: 500})
     }
