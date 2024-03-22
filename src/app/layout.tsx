@@ -3,6 +3,8 @@ import '@/assets/styles/global.css';
 import Navbar from "@/components/navbar/navbar.component";
 import Footer from "@/components/footer/footer.component";
 import AuthProvider from "@/components/auth-provider/auth-provider.component";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
     title: "LordEver | Sample booking app",
@@ -22,6 +24,7 @@ export default function MainLayout({
                     <Navbar />
                     <main>{children}</main>
                     <Footer />
+                    <ToastContainer />
                 </body>
             </html>
         </AuthProvider>
