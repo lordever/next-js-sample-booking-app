@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useCallback, useEffect, useState} from 'react';
-import {FormFieldsType, SellerInfo} from "@/components/property-add-form/property-add-form.model";
+import {FormFieldsType, SellerInfo} from "@/components/property-form/property-form.model";
 import {PropertyModel} from "@/models/property.model";
 import {toast} from "react-toastify";
 import {useParams, useRouter} from "next/navigation";
@@ -115,8 +115,24 @@ const PropertyEditForm = () => {
         }));
     }, []);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        try {
+            const formData = new FormData(e.currentTarget);
+            const res = await fetch(`/api/properties/${id}`, {method: "PUT", body: formData});
+
+            if (res.status === 200) {
+                router.push(`/properties/${id}`)
+            } else if (res.status === 401 || res.status === 403) {
+                toast.error("Permission denied");
+            } else {
+                toast.error("Something went wrong");
+            }
+        } catch (error) {
+            console.error("Error by updating property:", error);
+            toast.error("Something went wrong");
+        }
     }
 
     if (loading) {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useCallback, useState} from 'react';
-import {FormFieldsType, SellerInfo} from "@/components/property-add-form/property-add-form.model";
+import {FormFieldsType, SellerInfo} from "@/components/property-form/property-form.model";
 import {PropertyModel} from "@/models/property.model";
 import {set} from "mongoose";
 
