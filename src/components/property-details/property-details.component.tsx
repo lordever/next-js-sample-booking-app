@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {PropertyModel} from "@/models/property.model";
 import {FaBed, FaBath, FaRulerCombined, FaTimes, FaCheck, FaMapMarker} from "react-icons/fa";
+import PropertyMap from "@/components/property-map/property-map.component";
 
 interface PropertyDetailsProps {
     property: PropertyModel;
@@ -104,7 +105,7 @@ const PropertyDetails: FC<PropertyDetailsProps> = ({property}) => {
                 </ul>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <div id="map"></div>
+                <PropertyMap property={property} />
             </div>
         </main>
     );
