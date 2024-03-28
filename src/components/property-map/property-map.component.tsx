@@ -1,12 +1,13 @@
 "use client";
 
-import React, {FC, useEffect, useState} from 'react';
-import pin from "@/assets/images/pin.svg";
+import {FC, useEffect, useState} from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import Map, { Marker } from 'react-map-gl';
+import { setDefaults, fromAddress } from 'react-geocode';
+import Image from 'next/image';
+import pin from '@/assets/images/pin.svg';
 import {PropertyModel} from "@/models/property.model";
-import {fromAddress, setDefaults} from "react-geocode";
 import Spinner from "@/components/spinner/spinner.component";
-import {Map, Marker, ViewState} from "react-map-gl";
-import Image from "next/image";
 
 interface PropertyMapProps {
     property: PropertyModel;
@@ -15,20 +16,20 @@ interface PropertyMapProps {
 const PropertyMap: FC<PropertyMapProps> = ({property}) => {
     const [lat, setLat] = useState(0);
     const [lng, setLng] = useState(0);
-    const [viewPort, setViewPort] = useState({
+    const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 0,
-        zoom: 15,
-        width: "100%",
-        height: "500px"
+        zoom: 12,
+        width: '100%',
+        height: '500px',
     });
     const [loading, setLoading] = useState(true);
-    const [geoCodeError, setGeoCodeError] = useState(false);
+    const [geocodeError, setGeocodeError] = useState(false);
 
     setDefaults({
-        key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY || "",
-        language: "en",
-        region: "us"
+        key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY,
+        language: 'en',
+        region: 'us',
     });
 
     useEffect(() => {
@@ -41,23 +42,25 @@ const PropertyMap: FC<PropertyMapProps> = ({property}) => {
                 //  Check for results
                 if (res.results.length === 0) {
                     // No results found
-                    setGeoCodeError(true);
+                    setGeocodeError(true);
+                    setLoading(false);
                     return;
                 }
 
-                const {lat, lng} = res.results[0].geometry.location;
+                const { lat, lng } = res.results[0].geometry.location;
 
                 setLat(lat);
                 setLng(lng);
-                setViewPort((prevViewport) => ({
-                    ...prevViewport,
+                setViewport({
+                    ...viewport,
                     latitude: lat,
-                    longitude: lng
-                }));
+                    longitude: lng,
+                });
+
+                setLoading(false);
             } catch (error) {
-                console.error(error);
-                setGeoCodeError(true);
-            } finally {
+                console.log(error);
+                setGeocodeError(true);
                 setLoading(false);
             }
         };
@@ -65,30 +68,31 @@ const PropertyMap: FC<PropertyMapProps> = ({property}) => {
         fetchCoords();
     }, []);
 
-    if (loading) {
-        return <Spinner loading={loading}/>
+    if (loading) return <Spinner loading={loading} />;
+
+    // Handle case where geocoding failed
+    if (geocodeError) {
+        return <div className='text-xl'>No location data found</div>;
     }
 
-    if (geoCodeError) {
-        return <div className="text-xl">No location data found</div>
-    }
-
-    return !loading && (
-        <Map
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-            mapLib={import('mapbox-gl')}
-            initialViewState={{
-                latitude: lat,
-                longitude: lng,
-                zoom: 15
-            }}
-            style={{width: '100%', height: 500}}
-            mapStyle='mapbox://styles/mapbox/streets-v9'
-        >
-            <Marker longitude={lng} latitude={lat} anchor='bottom'>
-                <Image src={pin} alt='location' width={40} height={40}/>
-            </Marker>
-        </Map>
+    return (
+        !loading && (
+            <Map
+                mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+                mapLib={import('mapbox-gl')}
+                initialViewState={{
+                    longitude: lng,
+                    latitude: lat,
+                    zoom: 15,
+                }}
+                style={{ width: '100%', height: 500 }}
+                mapStyle='mapbox://styles/mapbox/streets-v9'
+            >
+                <Marker longitude={lng} latitude={lat} anchor='bottom'>
+                    <Image src={pin} alt='location' width={40} height={40} />
+                </Marker>
+            </Map>
+        )
     );
 };
 
