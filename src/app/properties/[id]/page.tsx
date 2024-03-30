@@ -13,6 +13,7 @@ import PropertyImages from "@/components/property-images/property-images.compone
 import PropertyContactForm from "@/components/property-contact-form/property-contact-form.component";
 import ShareButtons from "@/components/share-button/share-buttons.component";
 import BookmarkButton from "@/components/bookmark-button/bookmark-button.component";
+import {toast} from "react-toastify";
 
 const PropertyPage = () => {
     const {id} = useParams<{ id: string }>();
@@ -27,6 +28,7 @@ const PropertyPage = () => {
                 setProperty(property);
             } catch (error) {
                 console.error(error);
+                toast.error("Getting property data failed");
             } finally {
                 setLoading(false);
             }
