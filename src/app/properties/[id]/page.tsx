@@ -10,9 +10,9 @@ import PropertyDetails from "@/components/property-details/property-details.comp
 import {FaArrowLeft} from "react-icons/fa"
 import Spinner from "@/components/spinner/spinner.component";
 import PropertyImages from "@/components/property-images/property-images.component";
-import BookmarkButton from "@/components/bookmark-button/bookmark-button.component";
 import PropertyContactForm from "@/components/property-contact-form/property-contact-form.component";
 import ShareButtons from "@/components/share-button/share-buttons.component";
+import BookmarkButton from "@/components/bookmark-button/bookmark-button.component";
 
 const PropertyPage = () => {
     const {id} = useParams<{ id: string }>();

@@ -29,12 +29,12 @@ export const POST = async (request: Request) => {
 
         if (isBookmarked) {
             //If already bookmarked, remove it
-            user.bookmarked.pull(propertyId);
+            user.bookmarks.pull(propertyId);
             message = "Bookmark removed successfully";
             isBookmarked = false;
         } else {
             // If not bookmarked, add it
-            user.bookmarked.push(propertyId);
+            user.bookmarks.push(propertyId);
             message = "Bookmark added successfully";
             isBookmarked = true;
         }
