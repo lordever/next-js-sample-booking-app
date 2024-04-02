@@ -1,16 +1,17 @@
 "use client";
 
-import React, {useEffect, useState} from 'react';
-import {useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 import {PropertyModel} from "@/models/property.model";
+import {useSearchParams} from "next/navigation";
+
 
 const SearchResultsPage = () => {
     const [properties, setProperties] = useState<PropertyModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const searchParams = useSearchParams();
-    const location = searchParams.get("location");
-    const propertyType = searchParams.get("propertyType");
+    const location = searchParams.get('location');
+    const propertyType = searchParams.get('propertyType');
 
     useEffect(() => {
         const fetchPropertiesBySearchParams = async () => {
@@ -26,20 +27,16 @@ const SearchResultsPage = () => {
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
-        }
+        };
 
         fetchPropertiesBySearchParams();
-    }, [location, propertyType])
+    }, [location, propertyType]);
 
-    console.log(properties);
+    console.log('Properties:', properties);
 
-    return (
-        <div>
-
-        </div>
-    );
+    return <div></div>;
 };
 
 export default SearchResultsPage;
