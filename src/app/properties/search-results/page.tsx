@@ -49,7 +49,7 @@ const SearchResultsPage = () => {
         {loading ? <Spinner loading={loading}/> : (
             <section className="px-4 py-6">
                 <div className="container-xl lg:container m-auto px-4 py-6">
-                    <Link href="/properties" className="flex item-center text-blue-500 hover:underline mb-3">
+                    <Link href="/properties" className="inline-flex items-center text-blue-500 hover:underline mb-3">
                         <FaArrowAltCircleLeft className="mr-2 mb-1"/> Back to properties
                     </Link>
                     <h1 className="text-2xl mb-4">Search results</h1>

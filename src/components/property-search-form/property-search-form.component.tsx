@@ -1,11 +1,12 @@
 "use client";
 
 import React, {useState} from 'react';
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 const PropertySearchForm = () => {
-    const [location, setLocation] = useState<string>("");
-    const [propertyType, setProperty] = useState<string>("All");
+    const searchParams = useSearchParams();
+    const [location, setLocation] = useState<string>(searchParams.get("location") || "");
+    const [propertyType, setProperty] = useState<string>(searchParams.get("propertyType") || "All");
     const router = useRouter();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +34,7 @@ const PropertySearchForm = () => {
                     placeholder="Enter Keywords or Location"
                     className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
                     value={location}
+                    minLength={3}
                     onChange={(e) => setLocation(e.target.value)}
                 />
             </div>

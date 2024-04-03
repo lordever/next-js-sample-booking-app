@@ -23,18 +23,19 @@ export const GET = async (request: Request, {params}: { params: { id: string } }
         const propertyType = searchParams.get("propertyType");
 
         if (location) {
-            const locationPattern = new RegExp(location, "i");
+            const words = location.trim().split(/\s+/);
+            const locationPatterns = words.map(word => new RegExp(word, "i"));
 
-            //Match location pattern against database fields
+            // Match any of the location patterns against database fields
             const query: Query = {
-                $or: [
-                    {name: locationPattern},
-                    {description: locationPattern},
-                    {"location.street": locationPattern},
-                    {"location.city": locationPattern},
-                    {"location.state": locationPattern},
-                    {"location.zipcode": locationPattern},
-                ]
+                $or: locationPatterns.flatMap(pattern => [
+                    {name: pattern},
+                    {description: pattern},
+                    {"location.street": pattern},
+                    {"location.city": pattern},
+                    {"location.state": pattern},
+                    {"location.zipcode": pattern},
+                ])
             }
 
             // Only check for property if it's not 'All'
@@ -50,7 +51,6 @@ export const GET = async (request: Request, {params}: { params: { id: string } }
                 return new Response("Properties not found", {status: 404});
             }
         }
-
         return new Response("Properties not found", {status: 404});
     } catch (error) {
         console.error("GET search failed");
