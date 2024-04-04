@@ -2,6 +2,7 @@ export interface PropertyModel {
     _id: string;
     type: string;
     name: string;
+    owner: string;
     beds: number;
     baths: number;
     square_feet: number;
