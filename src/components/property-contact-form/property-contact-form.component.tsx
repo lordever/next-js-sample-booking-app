@@ -3,6 +3,7 @@
 import React, {FC, useState} from 'react';
 import {PropertyModel} from "@/models/property.model";
 import {FaPaperPlane} from "react-icons/fa"
+import {toast} from "react-toastify";
 
 interface PropertyContactForm {
     property: PropertyModel;
@@ -16,20 +17,46 @@ const PropertyContactForm: FC<PropertyContactForm> = ({property}) => {
     const [message, setMessage] = useState("");
     const [wasSubmitted, setWasSubmitted] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data = {
+        const input = {
             name,
             email,
             phone,
             message,
+            property: property._id,
             recipient: property.owner
         }
 
-        console.log(data);
+        try {
+            const res = await fetch("/api/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(input)
+            });
 
-        setWasSubmitted(true);
+            const data = await res.json();
+
+            if (res.status === 200) {
+                toast.success(data.message);
+                setWasSubmitted(true);
+            } else if (res.status === 400 || res.status === 401) {
+                toast.error(data.message);
+            } else {
+                toast.error("Error sending form");
+            }
+        } catch (e) {
+            console.error(e);
+            toast.error("Error sending form");
+        } finally {
+            setName("");
+            setEmail("");
+            setPhone("");
+            setMessage("");
+        }
     }
 
     return (
