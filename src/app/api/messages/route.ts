@@ -37,3 +37,26 @@ export const POST = async (request: Request) => {
         return new Response("Failed to save message", {status: 500})
     }
 }
+
+// GET /api/messages
+export const GET = async (request: Request) => {
+    try {
+        await connectDB();
+
+        const sessionUser = await getSessionUser();
+        if (!sessionUser || !sessionUser.userId) {
+            return new Response("User id is required", {status: 401});
+        }
+
+        const {userId} = sessionUser;
+
+        const messages = await Message.find({recipient: userId})
+            .populate("sender", "name")
+            .populate("property", "title");
+
+        return new Response(JSON.stringify(messages), {status: 200});
+    } catch (error) {
+        console.log("GET saved messages error:", error)
+        return new Response("Something went wrong", {status: 500})
+    }
+}
