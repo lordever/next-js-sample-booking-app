@@ -11,6 +11,7 @@ interface MessageProps {
 const Message: FC<MessageProps> = ({message}) => {
 
     const [isRead, setIsRead] = useState(message.read);
+    const [isDeleted, setIsDeleted] = useState(false);
 
     const handleReadClick = async () => {
         try {
@@ -25,6 +26,24 @@ const Message: FC<MessageProps> = ({message}) => {
             console.error(e);
             toast.error(`Mark message as ${isRead ? 'New' : 'Read'} was failed`);
         }
+    }
+
+    const handleDeleteClick = async () => {
+        try {
+            const res = await fetch(`/api/messages/${message._id}`, {method: "DELETE"});
+
+            if (res.status === 200) {
+                setIsDeleted(true);
+                toast.success(`Message has been removed`);
+            }
+        } catch (e) {
+            console.error(e);
+            toast.error('Message removing has been failed');
+        }
+    }
+
+    if(isDeleted) {
+        return null;
     }
 
     return (
@@ -65,7 +84,9 @@ const Message: FC<MessageProps> = ({message}) => {
             >
                 {isRead ? 'Mark as New' : 'Mark as Read'}
             </button>
-            <button className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md">
+            <button className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md"
+                    onClick={handleDeleteClick}
+            >
                 Delete
             </button>
         </div>
