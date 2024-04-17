@@ -5,6 +5,7 @@ import Footer from "@/components/footer/footer.component";
 import AuthProvider from "@/components/auth-provider/auth-provider.component";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {GlobalProvider} from "@/context/global.context";
 
 export const metadata: Metadata = {
     title: "LordEver | Sample booking app",
@@ -18,15 +19,17 @@ export default function MainLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <AuthProvider>
-            <html lang="en">
-                <body>
-                    <Navbar />
-                    <main>{children}</main>
-                    <Footer />
-                    <ToastContainer />
-                </body>
-            </html>
-        </AuthProvider>
+        <GlobalProvider>
+            <AuthProvider>
+                <html lang="en">
+                    <body>
+                        <Navbar />
+                        <main>{children}</main>
+                        <Footer />
+                        <ToastContainer />
+                    </body>
+                </html>
+            </AuthProvider>
+        </GlobalProvider>
     );
 }

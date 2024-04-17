@@ -3,6 +3,7 @@
 import React, {FC, useState} from 'react';
 import {MessageModel} from "@/models/message.model";
 import {toast} from "react-toastify";
+import {useGlobalContext} from "@/context/global.context";
 
 interface MessageProps {
     message: MessageModel;
@@ -12,6 +13,7 @@ const Message: FC<MessageProps> = ({message}) => {
 
     const [isRead, setIsRead] = useState(message.read);
     const [isDeleted, setIsDeleted] = useState(false);
+    const {setUnreadCount} = useGlobalContext();
 
     const handleReadClick = async () => {
         try {
@@ -20,6 +22,7 @@ const Message: FC<MessageProps> = ({message}) => {
             if (res.status === 200) {
                 const {read} = await res.json();
                 setIsRead(read);
+                setUnreadCount((prev) => (read ? --prev : ++prev));
                 toast.success(`Marked as ${read ? 'Read' : 'New'}`);
             }
         } catch (e) {
@@ -34,6 +37,7 @@ const Message: FC<MessageProps> = ({message}) => {
 
             if (res.status === 200) {
                 setIsDeleted(true);
+                setUnreadCount((prev) => --prev)
                 toast.success(`Message has been removed`);
             }
         } catch (e) {
@@ -42,7 +46,7 @@ const Message: FC<MessageProps> = ({message}) => {
         }
     }
 
-    if(isDeleted) {
+    if (isDeleted) {
         return null;
     }
 

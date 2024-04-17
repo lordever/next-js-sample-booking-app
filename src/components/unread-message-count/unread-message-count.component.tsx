@@ -3,13 +3,14 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Session} from "next-auth";
 import {toast} from "react-toastify";
+import {useGlobalContext} from "@/context/global.context";
 
 interface UnreadMessageCountProps {
     session: Session | null;
 }
 
 const UnreadMessageCount: FC<UnreadMessageCountProps> = ({session}) => {
-    const [unreadCount, setUnreadCount] = useState(0);
+    const {unreadCount, setUnreadCount} = useGlobalContext();
 
     useEffect(() => {
         if (!session) {
