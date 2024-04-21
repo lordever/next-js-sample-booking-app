@@ -9,6 +9,7 @@ import {
   FaMapMarker,
 } from 'react-icons/fa';
 import Link from 'next/link';
+import { getRateDisplay } from '@/services/rate.service';
 
 interface PropertyCardProps {
   property: PropertyModel;
@@ -17,16 +18,6 @@ interface PropertyCardProps {
 const PropertyCard: FC<PropertyCardProps> = ({ property }) => {
   const { _id, images, type, name, beds, baths, square_feet, location, rates } =
     property;
-
-  const getRateDisplay = () => {
-    if (rates.monthly) {
-      return `${rates.monthly.toLocaleString()}/mo`;
-    } else if (rates.weekly) {
-      return `${rates.weekly.toLocaleString()}/wk`;
-    } else if (rates.nightly) {
-      return `${rates.nightly.toLocaleString()}/night`;
-    }
-  };
 
   return (
     <div className="rounded-xl shadow-md relative">
@@ -44,7 +35,7 @@ const PropertyCard: FC<PropertyCardProps> = ({ property }) => {
           <h3 className="text-xl font-bold">{name}</h3>
         </div>
         <h3 className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right">
-          ${getRateDisplay()}
+          ${getRateDisplay(rates)}
         </h3>
 
         <div className="flex justify-center gap-4 text-gray-500 mb-4">
