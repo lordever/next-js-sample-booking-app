@@ -10,15 +10,16 @@ import Spinner from "@/components/spinner/spinner.component";
 const Properties: FC = () => {
     const [properties, setProperties] = useState<PropertyModel[]>([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(3);
+    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(() => {
         const processProperties = async () => {
             try {
-                const properties = await fetchProperties();
-
-                //Sort properties by date
-                properties.sort((a: PropertyModel, b: PropertyModel) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-                setProperties(properties);
+                const data = await fetchProperties(page, pageSize);
+                setProperties(data.properties);
+                setTotalItems(data.totalCount);
             } catch (error) {
                 console.error(error);
                 toast.error("Getting properties was failed");

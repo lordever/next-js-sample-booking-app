@@ -8,7 +8,6 @@ export const GET = async (request: Request, {params}: { params: { userId?: strin
 
         const {userId} = params;
 
-        console.log()
         if (!userId) {
             return new Response("User id is required", {status: 400});
         }

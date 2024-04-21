@@ -1,13 +1,13 @@
 const API_DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN || null;
 
-export async function fetchProperties() {
+export async function fetchProperties(page: number = 1, pageSize: number = 3) {
     try {
         //Handle the case when domain is not available yet
         if (!API_DOMAIN) {
             return [];
         }
 
-        const res = await fetch(`${API_DOMAIN}/properties`, {cache: "no-store"});
+        const res = await fetch(`${API_DOMAIN}/properties?page=${page}&pageSize=${pageSize}`, {cache: "no-store"});
 
         if (!res.ok) {
             throw new Error("Failed to fetch properties");
