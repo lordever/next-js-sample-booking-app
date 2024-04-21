@@ -18,7 +18,7 @@ const Properties: FC = () => {
   useEffect(() => {
     const processProperties = async () => {
       try {
-        const data = await fetchProperties(page, pageSize);
+        const data = await fetchProperties({ page, pageSize });
         setProperties(data.properties);
         setTotalItems(data.totalCount);
       } catch (error) {
