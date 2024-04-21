@@ -7,7 +7,7 @@ import {fetchProperties} from "@/services/property.service";
 import {toast} from "react-toastify";
 import Spinner from "@/components/spinner/spinner.component";
 
-const Properties: FC = async () => {
+const Properties: FC = () => {
     const [properties, setProperties] = useState<PropertyModel[]>([]);
     const [loading, setLoading] = useState(true);
 
