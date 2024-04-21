@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormFieldsType, SellerInfo} from "@/components/property-form/property-form.model";
 import {PropertyModel} from "@/models/property.model";
 import {toast} from "react-toastify";
@@ -68,7 +68,7 @@ const PropertyEditForm = () => {
         fetchPropertyData();
     }, [])
 
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
 
         if (name.includes(".")) {
@@ -91,9 +91,9 @@ const PropertyEditForm = () => {
                 [name]: value
             }));
         }
-    }, []);
+    };
 
-    const handleAmenitiesChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAmenitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = e.target;
 
         //Clone the current array
@@ -113,7 +113,7 @@ const PropertyEditForm = () => {
             ...prevFields,
             amenities: updatedAmenities
         }));
-    }, []);
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

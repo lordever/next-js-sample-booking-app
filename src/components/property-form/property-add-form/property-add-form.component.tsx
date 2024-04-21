@@ -1,41 +1,42 @@
-"use client";
+'use client';
 
-import React, {useCallback, useState} from 'react';
-import {FormFieldsType, SellerInfo} from "@/components/property-form/property-form.model";
-import {PropertyModel} from "@/models/property.model";
-import {set} from "mongoose";
-
+import React, { useState } from 'react';
+import {
+  FormFieldsType,
+  SellerInfo,
+} from '@/components/property-form/property-form.model';
+import { PropertyModel } from '@/models/property.model';
 
 const defaultFormFields: FormFieldsType = {
-    type: "Apartment",
-    name: "Test Property",
-    description: "",
-    location: {
-        street: "",
-        city: "Test City",
-        state: "Test state",
-        zipcode: ""
-    },
-    beds: 3,
-    baths: 2,
-    square_feet: 1800,
-    amenities: [],
-    rates: {
-        monthly: 2000
-    },
-    seller_info: {
-        name: "",
-        email: "test@test.com",
-        phone: ""
-    },
-    images: []
+  type: 'Apartment',
+  name: 'Test Property',
+  description: '',
+  location: {
+    street: '',
+    city: 'Test City',
+    state: 'Test state',
+    zipcode: '',
+  },
+  beds: 3,
+  baths: 2,
+  square_feet: 1800,
+  amenities: [],
+  rates: {
+    monthly: 2000,
+  },
+  seller_info: {
+    name: '',
+    email: 'test@test.com',
+    phone: '',
+  },
+  images: [],
 };
 
 const PropertyAddForm = () => {
 
     const [fields, setFields] = useState(defaultFormFields);
 
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
 
         if (name.includes(".")) {
@@ -58,9 +59,9 @@ const PropertyAddForm = () => {
                 [name]: value
             }));
         }
-    }, []);
+    };
 
-    const handleAmenitiesChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAmenitiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = e.target;
 
         //Clone the current array
@@ -80,9 +81,9 @@ const PropertyAddForm = () => {
             ...prevFields,
             amenities: updatedAmenities
         }));
-    }, []);
+    };
 
-    const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = e.target;
 
         if (files?.length && files?.length > 0) {
@@ -100,7 +101,7 @@ const PropertyAddForm = () => {
                 images: updatedImages
             }));
         }
-    }, []);
+    };
 
     return (
         <form
