@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import '@/assets/styles/global.css';
 import Navbar from '@/components/navbar/navbar.component';
 import Footer from '@/components/footer/footer.component';
 import AuthProvider from '@/components/auth-provider/auth-provider.component';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { GlobalProvider } from '@/context/global.context';
+import 'react-toastify/dist/ReactToastify.css';
+import 'photoswipe/dist/photoswipe.css';
+import '@/assets/styles/global.css';
 
 export const metadata: Metadata = {
   title: 'LordEver | Sample booking app',
