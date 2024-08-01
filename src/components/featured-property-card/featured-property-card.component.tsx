@@ -10,6 +10,7 @@ import {
   FaMapMarker,
 } from 'react-icons/fa';
 import Image from 'next/image';
+import NjImage from '@/components/image/image.component';
 
 interface FeaturedPropertyCardProps {
   property: PropertyModel;
@@ -18,7 +19,7 @@ interface FeaturedPropertyCardProps {
 const FeaturedPropertyCard: FC<FeaturedPropertyCardProps> = ({ property }) => {
   return (
     <div className="bg-white rounded-xl shadow-md relative flex flex-col md:flex-row">
-      <Image
+      <NjImage
         src={property.images[0]}
         alt=""
         width={0}

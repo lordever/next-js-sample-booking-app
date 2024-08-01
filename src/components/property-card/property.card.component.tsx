@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fa';
 import Link from 'next/link';
 import { getRateDisplay } from '@/services/rate.service';
+import NjImage from '@/components/image/image.component';
 
 interface PropertyCardProps {
   property: PropertyModel;
@@ -21,7 +22,7 @@ const PropertyCard: FC<PropertyCardProps> = ({ property }) => {
 
   return (
     <div className="rounded-xl shadow-md relative">
-      <Image
+      <NjImage
         src={images[0]}
         alt=""
         height={0}

@@ -11,6 +11,7 @@ import { useMediaQuery } from 'react-responsive';
 import { getProviders, signIn, signOut, useSession } from 'next-auth/react';
 import Spinner from '@/components/spinner/spinner.component';
 import UnreadMessageCount from '@/components/unread-message-count/unread-message-count.component';
+import NjImage from '../image/image.component';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -72,7 +73,7 @@ const Navbar = () => {
 
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             <Link className="flex flex-shrink-0 items-center" href="/">
-              <Image
+              <NjImage
                 className="h-10 w-auto"
                 src={LogoImage}
                 alt="PropertyPulse"
@@ -174,7 +175,7 @@ const Navbar = () => {
                   >
                     <span className="absolute -inset-1.5"></span>
                     <span className="sr-only">Open user menu</span>
-                    <Image
+                    <NjImage
                       className="h-8 w-8 rounded-full"
                       src={profileImage || ProfileDefaultImage}
                       alt=""

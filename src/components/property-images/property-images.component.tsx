@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Image from 'next/image';
 import { Gallery, Item } from 'react-photoswipe-gallery';
+import NjImage from '@/components/image/image.component';
 
 interface PropertyImagesProps {
   images: string[];
@@ -19,7 +20,7 @@ const PropertyImages: FC<PropertyImagesProps> = ({ images }) => {
               height="600"
             >
               {({ ref, open }) => (
-                <Image
+                <NjImage
                   ref={ref}
                   onClick={open}
                   src={images[0]}
@@ -48,7 +49,7 @@ const PropertyImages: FC<PropertyImagesProps> = ({ images }) => {
                     height="600"
                   >
                     {({ ref, open }) => (
-                      <Image
+                      <NjImage
                         ref={ref}
                         onClick={open}
                         src={image}

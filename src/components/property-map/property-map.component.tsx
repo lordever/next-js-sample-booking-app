@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Map, { Marker } from 'react-map-gl';
 import { setDefaults, fromAddress } from 'react-geocode';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 import pin from '@/assets/images/pin.svg';
 import { PropertyModel } from '@/models/property.model';
 import Spinner from '@/components/spinner/spinner.component';
+import NjImage from '@/components/image/image.component';
 
 interface PropertyMapProps {
   property: PropertyModel;
@@ -90,7 +91,7 @@ const PropertyMap: FC<PropertyMapProps> = ({ property }) => {
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
         <Marker longitude={lng} latitude={lat} anchor="bottom">
-          <Image src={pin} alt="location" width={40} height={40} />
+          <NjImage src={pin} alt="location" width={40} height={40} />
         </Marker>
       </Map>
     )
