@@ -42,10 +42,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
         </dependency>
@@ -146,8 +142,23 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.7.0</version>
         </dependency>
     </dependencies>
 
@@ -225,87 +236,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <!--	<build>-->
-    <!--		<sourceDirectory>src/main/kotlin</sourceDirectory>-->
-    <!--		<testSourceDirectory>src/test/kotlin</testSourceDirectory>-->
-
-    <!--		<plugins>-->
-    <!--			<plugin>-->
-    <!--				<groupId>org.jetbrains.kotlin</groupId>-->
-    <!--				<artifactId>kotlin-maven-plugin</artifactId>-->
-    <!--				<version>${kotlin.version}</version>-->
-    <!--				<executions>-->
-    <!--					<execution>-->
-    <!--						<id>kapt</id>-->
-    <!--						<goals>-->
-    <!--							<goal>kapt</goal>-->
-    <!--						</goals>-->
-    <!--						<configuration>-->
-    <!--							<sourceDirs>-->
-    <!--								<sourceDir>src/main/kotlin</sourceDir>-->
-    <!--								<sourceDir>src/main/java</sourceDir>-->
-    <!--							</sourceDirs>-->
-    <!--							<annotationProcessorPaths>-->
-    <!--								<annotationProcessorPath>-->
-    <!--									<groupId>org.mapstruct</groupId>-->
-    <!--									<artifactId>mapstruct-processor</artifactId>-->
-    <!--									<version>${mapstruct.version}</version>-->
-    <!--								</annotationProcessorPath>-->
-    <!--							</annotationProcessorPaths>-->
-    <!--						</configuration>-->
-    <!--					</execution>-->
-    <!--					<execution>-->
-    <!--						<id>compile</id>-->
-    <!--						<phase>compile</phase>-->
-    <!--						<goals>-->
-    <!--							<goal>compile</goal>-->
-    <!--						</goals>-->
-    <!--					</execution>-->
-    <!--					<execution>-->
-    <!--						<id>test-compile</id>-->
-    <!--						<phase>test-compile</phase>-->
-    <!--						<goals>-->
-    <!--							<goal>test-compile</goal>-->
-    <!--						</goals>-->
-    <!--					</execution>-->
-    <!--				</executions>-->
-    <!--			</plugin>-->
-
-    <!--			<plugin>-->
-    <!--				<groupId>org.apache.maven.plugins</groupId>-->
-    <!--				<artifactId>maven-compiler-plugin</artifactId>-->
-    <!--				<version>3.8.1</version>-->
-    <!--				<configuration>-->
-    <!--					<proc>none</proc>-->
-    <!--					<source>${java.version}</source>-->
-    <!--					<target>${java.version}</target>-->
-    <!--				</configuration>-->
-    <!--				<executions>-->
-    <!--					&lt;!&ndash; Replacing default-compile as it is treated specially by maven &ndash;&gt;-->
-    <!--					<execution>-->
-    <!--						<id>default-compile</id>-->
-    <!--						<phase>none</phase>-->
-    <!--					</execution>-->
-    <!--					&lt;!&ndash; Replacing default-testCompile as it is treated specially by maven &ndash;&gt;-->
-    <!--					<execution>-->
-    <!--						<id>default-testCompile</id>-->
-    <!--						<phase>none</phase>-->
-    <!--					</execution>-->
-    <!--					<execution>-->
-    <!--						<id>java-compile</id>-->
-    <!--						<phase>compile</phase>-->
-    <!--						<goals>-->
-    <!--							<goal>compile</goal>-->
-    <!--						</goals>-->
-    <!--					</execution>-->
-    <!--					<execution>-->
-    <!--						<id>java-test-compile</id>-->
-    <!--						<phase>test-compile</phase>-->
-    <!--						<goals> <goal>testCompile</goal> </goals>-->
-    <!--					</execution>-->
-    <!--				</executions>-->
-    <!--			</plugin>-->
-    <!--		</plugins>-->
-    <!--	</build>-->
 </project>

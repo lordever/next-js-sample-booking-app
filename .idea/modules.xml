@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/next-js-sample-booking-app.iml" filepath="$PROJECT_DIR$/.idea/next-js-sample-booking-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/next-js-sample-bookmarks.iml" filepath="$PROJECT_DIR$/backend/next-js-sample-bookmarks.iml" />
     </modules>
   </component>
 </project>
