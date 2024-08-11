@@ -1,57 +1,56 @@
-drop table if exists property;
-drop table if exists rate;
-drop table if exists location;
-drop table if exists image;
-drop table if exists amenities;
+DROP TABLE IF EXISTS property;
+DROP TABLE IF EXISTS rate;
+DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS amenities;
 
-create table property
+CREATE TABLE property
 (
-    id                 varchar(36)  not null,
-    type               varchar(50)  not null,
-    name               varchar(50)  not null,
-    owner              varchar(50)  not null,
-    description        varchar(255) not null,
-    beds               int          not null,
-    baths              int          not null,
-    square_feet        int          not null,
+    id                 varchar(36)  NOT NULL PRIMARY KEY,
+    type               varchar(50)  NOT NULL,
+    name               varchar(50)  NOT NULL,
+    owner              varchar(50)  NOT NULL,
+    description        varchar(255) NOT NULL,
+    beds               int          NOT NULL,
+    baths              int          NOT NULL,
+    square_feet        int          NOT NULL,
     create_date        datetime(6),
-    last_modified_date datetime(6),
-    primary key (id)
-) engine = InnoDB;
+    last_modified_date datetime(6)
+) ENGINE = InnoDB;
 
-create table rate
+CREATE TABLE rate
 (
-    id          varchar(36) not null PRIMARY KEY,
-    property_id varchar(36) not null UNIQUE,
-    monthly     int         not null,
-    weekly      int         not null,
-    nightly     int         not null,
-    CONSTRAINT rate_fk FOREIGN KEY (property_id) REFERENCES property (id)
-) engine = InnoDB;
+    id          varchar(36) NOT NULL PRIMARY KEY,
+    property_id varchar(36),
+    monthly     int         NOT NULL,
+    weekly      int         NOT NULL,
+    nightly     int         NOT NULL,
+    CONSTRAINT fk_property_id_rate FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
 
-create table location
+CREATE TABLE location
 (
-    id          varchar(36)  not null PRIMARY KEY,
-    property_id varchar(36)  not null UNIQUE,
-    city        varchar(100) not null,
-    street      varchar(100) not null,
-    state       varchar(100) not null,
-    zipcode     varchar(100) not null,
-    CONSTRAINT location_fk FOREIGN KEY (property_id) REFERENCES property (id)
-) engine = InnoDB;
+    id          varchar(36)  NOT NULL PRIMARY KEY,
+    property_id varchar(36),
+    city        varchar(100) NOT NULL,
+    street      varchar(100) NOT NULL,
+    state       varchar(100) NOT NULL,
+    zipcode     varchar(100) NOT NULL,
+    CONSTRAINT fk_property_id_location FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
 
-create table image
+CREATE TABLE image
 (
-    id          varchar(36) not null PRIMARY KEY,
-    property_id varchar(36) not null UNIQUE,
-    url         text        not null,
-    CONSTRAINT image_fk FOREIGN KEY (property_id) REFERENCES property (id)
-) engine = InnoDB;
+    id          varchar(36) NOT NULL PRIMARY KEY,
+    property_id varchar(36),
+    url         text        NOT NULL,
+    CONSTRAINT fk_property_id_image FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
 
-create table amenities
+CREATE TABLE amenities
 (
-    id          varchar(36) not null PRIMARY KEY,
-    property_id varchar(36) not null UNIQUE,
-    name        varchar(50) not null,
-    CONSTRAINT amenities_fk FOREIGN KEY (property_id) REFERENCES property (id)
-) engine = InnoDB;
+    id          varchar(36) NOT NULL PRIMARY KEY,
+    property_id varchar(36),
+    name        varchar(50) NOT NULL,
+    CONSTRAINT fk_property_id_amenities FOREIGN KEY (property_id) REFERENCES property(id) ON DELETE CASCADE
+) ENGINE = InnoDB;
