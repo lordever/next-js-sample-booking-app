@@ -1,11 +1,6 @@
 package com.bookmarks.bookmarks.entities
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.UpdateTimestamp
@@ -35,16 +30,29 @@ data class Property(
 
     @field:UpdateTimestamp
     var lastModifiedDate: LocalDateTime? = null,
+) {
+    @field:OneToMany(mappedBy = "property", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
+    var rates: MutableSet<Rate>? = mutableSetOf()
 
     @field:OneToMany(mappedBy = "property")
-    var rates: Set<Rate>? = null,
+    var locations: MutableSet<Location>? = mutableSetOf()
 
     @field:OneToMany(mappedBy = "property")
-    var locations: Set<Location>? = null,
+    var images: MutableSet<Image>? = mutableSetOf()
 
     @field:OneToMany(mappedBy = "property")
-    var images: Set<Image>? = null,
+    var amenities: MutableSet<Amenities>? = mutableSetOf()
 
-    @field:OneToMany(mappedBy = "property")
-    var amenities: Set<Amenities>? = null,
-)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+
+        other as Property
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+}
