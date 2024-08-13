@@ -33,7 +33,7 @@ class ImageRepositoryTest {
 
     @Transactional
     @Test
-    fun testAmenities() {
+    fun testImages() {
         val image = Image(
             url = "http://test.com/image.png"
         )
@@ -54,7 +54,7 @@ class ImageRepositoryTest {
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Image should be found in the database")
 
-        val doesPropertyContainAmenities =  fetchedProperty.images?.any { it.id == savedImage.id } ?: false
-        assertTrue(doesPropertyContainAmenities, "Property should contain the saved Image")
+        val doesPropertyContainImages =  fetchedProperty.images?.any { it.id == savedImage.id } ?: false
+        assertTrue(doesPropertyContainImages, "Property should contain the saved Images")
     }
 }
