@@ -1,4 +1,4 @@
-package com.bookmarks.bookmarks.models
+package com.bookmarks.bookmarks.models.records.json
 
 data class LocationJSONRecord(
     var street: String? = null,

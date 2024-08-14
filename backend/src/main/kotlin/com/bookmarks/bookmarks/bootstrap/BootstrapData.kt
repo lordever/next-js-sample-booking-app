@@ -1,6 +1,8 @@
 package com.bookmarks.bookmarks.bootstrap
 
-import com.bookmarks.bookmarks.models.PropertyJSONRecord
+import com.bookmarks.bookmarks.entities.Property
+import com.bookmarks.bookmarks.mappers.PropertyMapper
+import com.bookmarks.bookmarks.models.records.json.PropertyJSONRecord
 import com.bookmarks.bookmarks.repository.ImageRepository
 import com.bookmarks.bookmarks.repository.LocationRepository
 import com.bookmarks.bookmarks.repository.PropertyRepository
@@ -18,7 +20,8 @@ class BootstrapData(
     var propertyRepository: PropertyRepository,
     var locationRepository: LocationRepository,
     var rateRepository: RateRepository,
-    var imageRepository: ImageRepository
+    var imageRepository: ImageRepository,
+    var propertyMapper: PropertyMapper
 ) : CommandLineRunner {
     @Transactional
     override fun run(vararg args: String?) {
@@ -31,7 +34,8 @@ class BootstrapData(
             val mapper = jacksonObjectMapper()
 
             val recs: List<PropertyJSONRecord> = mapper.readValue(file)
-            println(recs)
+            val property: Property = propertyMapper.toProperty(recs[0])
+            println(property)
         }
     }
 }

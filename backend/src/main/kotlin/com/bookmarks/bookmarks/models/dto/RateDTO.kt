@@ -1,6 +1,6 @@
-package com.bookmarks.bookmarks.models
+package com.bookmarks.bookmarks.models.dto
 
-data class RateJSONRecord(
+data class RateDTO(
     var weekly: String? = null,
     var monthly: String? = null,
     var nightly: String? = null,
