@@ -69,7 +69,7 @@ class BootstrapData(
                 val image = Image(
                     url = imageJsonRecord
                 )
-                //TODO: assign property
+                image.assignProperty(property)
             }
         }
     }
@@ -80,7 +80,7 @@ class BootstrapData(
                 val amenities = Amenities(
                     name = amenitiesJsonRecord
                 )
-                //TODO: assign property
+               amenities.assignProperty(property)
             }
         }
     }

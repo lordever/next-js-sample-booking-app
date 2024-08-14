@@ -24,11 +24,15 @@ data class Image(
 
         other as Image
 
-        return id == other.id
+        if (id != null && other.id != null) {
+            return id == other.id
+        }
+
+        return url == other.url
     }
 
     override fun hashCode(): Int {
-        return id.hashCode()
+        return id?.hashCode() ?: (url?.hashCode() ?: 0)
     }
 
     fun assignProperty(property: Property) {

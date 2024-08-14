@@ -24,11 +24,15 @@ data class Amenities(
 
         other as Amenities
 
-        return id == other.id
+        if (id != null && other.id != null) {
+            return id == other.id
+        }
+
+        return name == other.name
     }
 
     override fun hashCode(): Int {
-        return id.hashCode()
+        return id?.hashCode() ?: (name?.hashCode() ?: 0)
     }
 
     fun assignProperty(property: Property) {
