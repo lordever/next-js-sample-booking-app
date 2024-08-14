@@ -5,10 +5,7 @@ import com.bookmarks.bookmarks.mappers.LocationMapper
 import com.bookmarks.bookmarks.mappers.PropertyMapper
 import com.bookmarks.bookmarks.mappers.RateMapper
 import com.bookmarks.bookmarks.models.records.json.PropertyJSONRecord
-import com.bookmarks.bookmarks.repository.ImageRepository
-import com.bookmarks.bookmarks.repository.LocationRepository
-import com.bookmarks.bookmarks.repository.PropertyRepository
-import com.bookmarks.bookmarks.repository.RateRepository
+import com.bookmarks.bookmarks.repository.*
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.boot.CommandLineRunner
@@ -26,7 +23,9 @@ class BootstrapData(
     var propertyMapper: PropertyMapper,
     var rateMapper: RateMapper,
     var locationMapper: LocationMapper,
+    private val amenitiesRepository: AmenitiesRepository,
 ) : CommandLineRunner {
+
     @Transactional
     override fun run(vararg args: String?) {
         loadJsonData()
@@ -40,25 +39,25 @@ class BootstrapData(
             val recs: List<PropertyJSONRecord> = mapper.readValue(file)
             recs.forEach { propertyJSONRecord ->
                 val property = propertyMapper.toProperty(propertyJSONRecord)
-                var location = Location()
-                var rate = Rate()
+                val location: Location
+                val rate: Rate
 
                 if (propertyJSONRecord.location != null) {
                     location = locationMapper.toLocation(propertyJSONRecord.location!!)
                     location.assignProperty(property)
+                    locationRepository.save(location)
                 }
 
                 if (propertyJSONRecord.rates != null) {
                     rate = rateMapper.toRate(propertyJSONRecord.rates!!)
                     rate.assignProperty(property)
+                    rateRepository.save(rate)
                 }
 
                 loadImages(propertyJSONRecord, property)
                 loadAmenities(propertyJSONRecord, property)
 
-                println(property)
-                println(location)
-                println(rate)
+                propertyRepository.save(property)
             }
         }
     }
@@ -70,6 +69,8 @@ class BootstrapData(
                     url = imageJsonRecord
                 )
                 image.assignProperty(property)
+
+                imageRepository.save(image)
             }
         }
     }
@@ -80,7 +81,9 @@ class BootstrapData(
                 val amenities = Amenities(
                     name = amenitiesJsonRecord
                 )
-               amenities.assignProperty(property)
+                amenities.assignProperty(property)
+
+                amenitiesRepository.save(amenities)
             }
         }
     }
