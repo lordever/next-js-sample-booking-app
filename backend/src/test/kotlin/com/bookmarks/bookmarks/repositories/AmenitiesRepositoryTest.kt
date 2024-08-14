@@ -34,27 +34,45 @@ class AmenitiesRepositoryTest {
     @Transactional
     @Test
     fun testAmenities() {
-        val amenities = Amenities(
+        val amenities1 = Amenities(
             name = "Test"
         )
-        amenities.assignProperty(testSavedProperty)
+        val amenities2 = Amenities(
+            name = "Test2"
+        )
+        amenities1.assignProperty(testSavedProperty)
+        amenities2.assignProperty(testSavedProperty)
 
-        val savedAmenities = amenitiesRepository.save(amenities)
+        val savedAmenities1 = amenitiesRepository.save(amenities1)
+        val savedAmenities2 = amenitiesRepository.save(amenities2)
 
-        assertNotNull(savedAmenities.id, "Amenities ID should not be null after saving")
+        assertNotNull(savedAmenities1.id, "Amenities ID should not be null after saving")
+        assertNotNull(savedAmenities2.id, "Amenities ID should not be null after saving")
 
-        val fetchedAmenities = amenitiesRepository.findById(savedAmenities.id!!).orElse(null)
-        assertNotNull(fetchedAmenities, "Amenities should be found in the database")
+        val fetchedAmenities1 = amenitiesRepository.findById(savedAmenities1.id!!).orElse(null)
+        val fetchedAmenities2 = amenitiesRepository.findById(savedAmenities2.id!!).orElse(null)
+
+        assertNotNull(fetchedAmenities1, "First Amenities should be found in the database")
+        assertNotNull(fetchedAmenities2, "Second Amenities should be found in the database")
+
         assertEquals(
             testSavedProperty.id,
-            fetchedAmenities.property?.id,
-            "Amenities should be associated with the correct Property"
+            fetchedAmenities1?.property?.id,
+            "First Amenities should be associated with the correct Property"
+        )
+        assertEquals(
+            testSavedProperty.id,
+            fetchedAmenities2?.property?.id,
+            "Second Amenities should be associated with the correct Property"
         )
 
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Property should be found in the database")
 
-        val doesPropertyContainAmenities =  fetchedProperty.amenities?.any { it.id == savedAmenities.id } ?: false
-        assertTrue(doesPropertyContainAmenities, "Property should contain the saved Amenities")
+        val doesPropertyContainAmenities1 = fetchedProperty?.amenities?.any { it.id == savedAmenities1.id } ?: false
+        val doesPropertyContainAmenities2 = fetchedProperty?.amenities?.any { it.id == savedAmenities2.id } ?: false
+
+        assertTrue(doesPropertyContainAmenities1, "Property should contain the first saved Amenities")
+        assertTrue(doesPropertyContainAmenities2, "Property should contain the second saved Amenities")
     }
 }

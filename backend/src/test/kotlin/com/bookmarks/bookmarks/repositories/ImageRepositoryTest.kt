@@ -34,27 +34,46 @@ class ImageRepositoryTest {
     @Transactional
     @Test
     fun testImages() {
-        val image = Image(
-            url = "http://test.com/image.png"
+        val image1 = Image(
+            url = "http://test.com/image1.png"
         )
-        image.assignProperty(testSavedProperty)
+        val image2 = Image(
+            url = "http://test.com/image2.png"
+        )
+        image1.assignProperty(testSavedProperty)
+        image2.assignProperty(testSavedProperty)
 
-        val savedImage = imageRepository.save(image)
+        val firstSavedImage = imageRepository.save(image1)
+        val secondSavedImage = imageRepository.save(image2)
 
-        assertNotNull(savedImage.id, "Image ID should not be null after saving")
+        assertNotNull(firstSavedImage.id, "First image ID should not be null after saving")
+        assertNotNull(secondSavedImage.id, "Second image ID should not be null after saving")
 
-        val fetchedImage = imageRepository.findById(savedImage.id!!).orElse(null)
-        assertNotNull(fetchedImage, "Image should be found in the database")
+        val firstFetchedImage = imageRepository.findById(firstSavedImage.id!!).orElse(null)
+        val secondFetchedImage = imageRepository.findById(secondSavedImage.id!!).orElse(null)
+
+        assertNotNull(firstFetchedImage, "First image should be found in the database")
+        assertNotNull(secondFetchedImage, "Second image should be found in the database")
+
         assertEquals(
             testSavedProperty.id,
-            fetchedImage.property?.id,
-            "Image should be associated with the correct Property"
+            firstFetchedImage.property?.id,
+            "First image should be associated with the correct Property"
+        )
+
+        assertEquals(
+            testSavedProperty.id,
+            secondFetchedImage.property?.id,
+            "Second image should be associated with the correct Property"
         )
 
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Image should be found in the database")
 
-        val doesPropertyContainImages =  fetchedProperty.images?.any { it.id == savedImage.id } ?: false
-        assertTrue(doesPropertyContainImages, "Property should contain the saved Images")
+        val doesPropertyContainImages1 = fetchedProperty.images?.any { it.id == firstSavedImage.id } ?: false
+        val doesPropertyContainImages2 = fetchedProperty.images?.any { it.id == secondSavedImage.id } ?: false
+
+        assertTrue(doesPropertyContainImages1, "Property should contain the first saved Images")
+        assertTrue(doesPropertyContainImages2, "Property should contain the second saved Images")
     }
 }
