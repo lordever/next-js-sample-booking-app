@@ -25,7 +25,7 @@ data class Location(
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
 
-        other as Rate
+        other as Location
 
         return id == other.id
     }

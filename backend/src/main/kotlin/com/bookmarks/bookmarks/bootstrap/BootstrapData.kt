@@ -1,7 +1,9 @@
 package com.bookmarks.bookmarks.bootstrap
 
-import com.bookmarks.bookmarks.entities.Property
+import com.bookmarks.bookmarks.entities.*
+import com.bookmarks.bookmarks.mappers.LocationMapper
 import com.bookmarks.bookmarks.mappers.PropertyMapper
+import com.bookmarks.bookmarks.mappers.RateMapper
 import com.bookmarks.bookmarks.models.records.json.PropertyJSONRecord
 import com.bookmarks.bookmarks.repository.ImageRepository
 import com.bookmarks.bookmarks.repository.LocationRepository
@@ -21,7 +23,9 @@ class BootstrapData(
     var locationRepository: LocationRepository,
     var rateRepository: RateRepository,
     var imageRepository: ImageRepository,
-    var propertyMapper: PropertyMapper
+    var propertyMapper: PropertyMapper,
+    var rateMapper: RateMapper,
+    var locationMapper: LocationMapper,
 ) : CommandLineRunner {
     @Transactional
     override fun run(vararg args: String?) {
@@ -34,8 +38,50 @@ class BootstrapData(
             val mapper = jacksonObjectMapper()
 
             val recs: List<PropertyJSONRecord> = mapper.readValue(file)
-            val property: Property = propertyMapper.toProperty(recs[0])
-            println(property)
+            recs.forEach { propertyJSONRecord ->
+                val property = propertyMapper.toProperty(propertyJSONRecord)
+                var location = Location()
+                var rate = Rate()
+
+                if (propertyJSONRecord.location != null) {
+                    location = locationMapper.toLocation(propertyJSONRecord.location!!)
+                    location.assignProperty(property)
+                }
+
+                if (propertyJSONRecord.rates != null) {
+                    rate = rateMapper.toRate(propertyJSONRecord.rates!!)
+                    rate.assignProperty(property)
+                }
+
+                loadImages(propertyJSONRecord, property)
+                loadAmenities(propertyJSONRecord, property)
+
+                println(property)
+                println(location)
+                println(rate)
+            }
+        }
+    }
+
+    private fun loadImages(propertyJSONRecord: PropertyJSONRecord, property: Property) {
+        propertyJSONRecord.images?.takeIf { it.isNotEmpty() }?.let { images ->
+            images.forEach { imageJsonRecord ->
+                val image = Image(
+                    url = imageJsonRecord
+                )
+                //TODO: assign property
+            }
+        }
+    }
+
+    private fun loadAmenities(propertyJSONRecord: PropertyJSONRecord, property: Property) {
+        propertyJSONRecord.amenities?.takeIf { it.isNotEmpty() }?.let { amenitiesList ->
+            amenitiesList.forEach { amenitiesJsonRecord ->
+                val amenities = Amenities(
+                    name = amenitiesJsonRecord
+                )
+                //TODO: assign property
+            }
         }
     }
 }

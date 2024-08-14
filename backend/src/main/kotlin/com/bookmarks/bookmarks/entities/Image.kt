@@ -22,7 +22,7 @@ data class Image(
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
 
-        other as Rate
+        other as Image
 
         return id == other.id
     }

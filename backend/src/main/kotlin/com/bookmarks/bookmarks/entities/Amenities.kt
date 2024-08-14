@@ -22,7 +22,7 @@ data class Amenities(
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
 
-        other as Rate
+        other as Amenities
 
         return id == other.id
     }
