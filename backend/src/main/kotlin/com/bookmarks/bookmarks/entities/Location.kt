@@ -17,10 +17,10 @@ data class Location(
     @field:JdbcTypeCode(SqlTypes.CHAR)
     @field:Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     var id: UUID? = null,
-
-    @field:ManyToOne
-    var property: Property? = null
 ) {
+    @field:OneToMany(mappedBy = "location", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
+    var property: MutableSet<Property>? = mutableSetOf()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
@@ -32,10 +32,5 @@ data class Location(
 
     override fun hashCode(): Int {
         return id.hashCode()
-    }
-
-    fun assignProperty(property: Property) {
-        this.property = property
-        property.locations?.add(this)
     }
 }

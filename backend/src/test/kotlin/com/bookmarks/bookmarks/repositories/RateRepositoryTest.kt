@@ -39,7 +39,7 @@ class RateRepositoryTest {
             weekly = 10,
             nightly = 2
         )
-        rate.assignProperty(testSavedProperty)
+        testSavedProperty.assignRate(rate)
 
         val savedRate = rateRepository.save(rate)
 
@@ -47,16 +47,10 @@ class RateRepositoryTest {
 
         val fetchedRate = rateRepository.findById(savedRate.id!!).orElse(null)
         assertNotNull(fetchedRate, "Rate should be found in the database")
-        assertEquals(
-            testSavedProperty.id,
-            fetchedRate.property?.id,
-            "Rate should be associated with the correct Property"
-        )
+        assertEquals(testSavedProperty.id, fetchedRate?.property?.firstOrNull()?.id, "Rate should be associated with the correct Property")
 
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Property should be found in the database")
-
-        val doesPropertyContainRate =  fetchedProperty.rates?.any { it.id == savedRate.id } ?: false
-        assertTrue(doesPropertyContainRate, "Property should contain the saved Rate")
+        assertEquals(savedRate.id, fetchedProperty?.rates?.id, "Property should be associated with the correct Rate")
     }
 }

@@ -40,7 +40,7 @@ class LocationRepositoryTest {
             street = "Will st.",
             zipcode = "123456"
         )
-        location.assignProperty(testSavedProperty)
+        testSavedProperty.assignLocation(location)
 
         val savedLocation = locationRepository.save(location)
 
@@ -48,16 +48,10 @@ class LocationRepositoryTest {
 
         val fetchedLocation = locationRepository.findById(savedLocation.id!!).orElse(null)
         assertNotNull(fetchedLocation, "Location should be found in the database")
-        assertEquals(
-            testSavedProperty.id,
-            fetchedLocation.property?.id,
-            "Location should be associated with the correct Property"
-        )
+        assertEquals(testSavedProperty.id, fetchedLocation?.property?.firstOrNull()?.id, "Location should be associated with the correct Property")
 
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
-        assertNotNull(fetchedProperty, "Location should be found in the database")
-
-        val doesPropertyContainLocations =  fetchedProperty.locations?.any { it.id == savedLocation.id } ?: false
-        assertTrue(doesPropertyContainLocations, "Property should contain the saved Locations")
+        assertNotNull(fetchedProperty, "Property should be found in the database")
+        assertEquals(savedLocation.id, fetchedProperty?.location?.id, "Property should be associated with the correct Location")
     }
 }

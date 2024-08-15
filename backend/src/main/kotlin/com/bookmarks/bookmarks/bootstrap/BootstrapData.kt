@@ -44,14 +44,14 @@ class BootstrapData(
 
                 if (propertyJSONRecord.location != null) {
                     location = locationMapper.toLocation(propertyJSONRecord.location!!)
-                    location.assignProperty(property)
                     locationRepository.save(location)
+                    property.assignLocation(location)
                 }
 
                 if (propertyJSONRecord.rates != null) {
                     rate = rateMapper.toRate(propertyJSONRecord.rates!!)
-                    rate.assignProperty(property)
                     rateRepository.save(rate)
+                    property.assignRate(rate)
                 }
 
                 loadImages(propertyJSONRecord, property)

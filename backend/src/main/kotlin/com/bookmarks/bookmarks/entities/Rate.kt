@@ -1,11 +1,6 @@
 package com.bookmarks.bookmarks.entities
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
 import java.util.*
@@ -21,10 +16,10 @@ data class Rate(
     @field:JdbcTypeCode(SqlTypes.CHAR)
     @field:Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     var id: UUID? = null,
-
-    @field:ManyToOne
-    var property: Property? = null
 ) {
+    @field:OneToMany(mappedBy = "rates", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
+    var property: MutableSet<Property>? = mutableSetOf()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
@@ -36,10 +31,5 @@ data class Rate(
 
     override fun hashCode(): Int {
         return id.hashCode()
-    }
-
-    fun assignProperty(property: Property) {
-        this.property = property
-        property.rates?.add(this)
     }
 }

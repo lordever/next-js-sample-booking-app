@@ -30,13 +30,13 @@ data class Property(
 
     @field:UpdateTimestamp
     var lastModifiedDate: LocalDateTime? = null,
+
+    @field:ManyToOne
+    var rates: Rate? = null,
+
+    @field:ManyToOne
+    var location: Location? = null
 ) {
-    @field:OneToMany(mappedBy = "property", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
-    var rates: MutableSet<Rate>? = mutableSetOf()
-
-    @field:OneToMany(mappedBy = "property")
-    var locations: MutableSet<Location>? = mutableSetOf()
-
     @field:OneToMany(mappedBy = "property")
     var images: MutableSet<Image>? = mutableSetOf()
 
@@ -54,5 +54,15 @@ data class Property(
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+
+    fun assignRate(rate: Rate) {
+        this.rates = rate
+        rate.property?.add(this)
+    }
+
+    fun assignLocation(location: Location) {
+        this.location = location
+        location.property?.add(this)
     }
 }
