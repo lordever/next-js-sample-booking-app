@@ -1,6 +1,9 @@
 package com.bookmarks.bookmarks.models.dto
 
+import java.util.UUID
+
 data class PropertyDTO(
+    var id: UUID? = null,
     var type: String? = null,
     var name: String? = null,
     var owner: String? = null,

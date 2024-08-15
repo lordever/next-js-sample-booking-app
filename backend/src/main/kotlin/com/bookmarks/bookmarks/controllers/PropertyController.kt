@@ -1,9 +1,14 @@
 package com.bookmarks.bookmarks.controllers
 
+import com.bookmarks.bookmarks.models.dto.PropertyDTO
 import com.bookmarks.bookmarks.services.PropertyService
 import mu.KotlinLogging
+import org.springframework.data.domain.Page
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -20,5 +25,17 @@ class PropertyController(private val propertyService: PropertyService) {
         println("Calling from PropertyController custom exception handler")
 
         return ResponseEntity.notFound().build()
+    }
+
+    @GetMapping(BASE_PROPERTIES_PATH)
+    fun listProperties(
+        @RequestParam location: String?,
+        @RequestParam type: String?,
+        @RequestParam page: Int?,
+        @RequestParam pageSize: Int?
+    ): ResponseEntity<Page<PropertyDTO>> {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(propertyService.findAll(location, type, page, pageSize))
     }
 }
