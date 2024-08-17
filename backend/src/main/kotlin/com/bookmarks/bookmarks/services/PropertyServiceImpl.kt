@@ -6,8 +6,10 @@ import com.bookmarks.bookmarks.models.dto.PropertyDTO
 import com.bookmarks.bookmarks.repository.PropertyRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.util.StringUtils
 import java.util.*
 
 @Service
@@ -24,7 +26,11 @@ class PropertyServiceImpl(
     override fun findAll(location: String?, type: String?, pageNumber: Int?, pageSize: Int?): Page<PropertyDTO> {
         val pageRequest = buildPageRequest(pageNumber, pageSize)
 
-        val propertyPage: Page<Property> = propertyRepository.findAll(pageRequest)
+        val propertyPage: Page<Property> = if (type != null) {
+            listPropertiesByType(type, pageRequest)
+        } else {
+            propertyRepository.findAll(pageRequest)
+        }
 
         return propertyPage.map(propertyMapper::toDTO)
     }
@@ -52,6 +58,10 @@ class PropertyServiceImpl(
         val sort: Sort = Sort.by(Sort.Order.asc("name"))
 
         return PageRequest.of(queryPageNumber, queryPageSize, sort)
+    }
+
+    private fun listPropertiesByType(type: String, pageable: Pageable?): Page<Property> {
+        return propertyRepository.findAllByType(type, pageable)
     }
 
     override fun findById(id: UUID): PropertyDTO {
