@@ -58,12 +58,12 @@ class LocationRepositoryTest {
 
     @Transactional
     @Test
-    fun testLocationByZipCode() {
-        val zipcode = "19101"
+    fun testLocationByCity() {
+        val city = "Philadelphia"
 
-        val locationsByZipCode = locationRepository.findByZipcode(zipcode)
+        val locationsByCity = locationRepository.findByCity(city)
 
-        assertThat(locationsByZipCode).isNotEmpty
-        locationsByZipCode.forEach { location -> assertEquals(zipcode, location.zipcode) }
+        assertThat(locationsByCity).isNotEmpty
+        locationsByCity.forEach { location -> assertEquals(city, location.city) }
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class LocationServiceImpl(val locationRepository: LocationRepository) : LocationService {
-    override fun findByZipCode(zipCode: String): List<Location> {
-        return locationRepository.findByZipcode(zipCode)
+    override fun findByCity(city: String): List<Location> {
+        return locationRepository.findByCity(city)
     }
 }

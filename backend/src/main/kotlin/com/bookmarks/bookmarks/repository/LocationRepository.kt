@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface LocationRepository : JpaRepository<Location, UUID> {
-    fun findByZipcode(zipcode: String): List<Location>
+    fun findByCity(city: String): List<Location>
 }
