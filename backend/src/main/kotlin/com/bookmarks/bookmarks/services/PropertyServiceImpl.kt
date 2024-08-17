@@ -29,14 +29,17 @@ class PropertyServiceImpl(
         val pageRequest = buildPageRequest(pageNumber, pageSize)
 
         val propertyPage: Page<Property> =
-            if (type == null && city != null && StringUtils.hasText(city)) {
-                listPropertiesByCity(city, pageRequest)
+            if (type != null && city != null) {
+                listPropertiesByCityAndType(city, type, pageRequest)
             } else
-                if (city == null && type != null) {
-                    listPropertiesByType(type, pageRequest)
-                } else {
-                    propertyRepository.findAll(pageRequest)
-                }
+                if (type == null && city != null && StringUtils.hasText(city)) {
+                    listPropertiesByCity(city, pageRequest)
+                } else
+                    if (city == null && type != null) {
+                        listPropertiesByType(type, pageRequest)
+                    } else {
+                        propertyRepository.findAll(pageRequest)
+                    }
 
         return propertyPage.map(propertyMapper::toDTO)
     }
@@ -73,6 +76,11 @@ class PropertyServiceImpl(
     private fun listPropertiesByCity(city: String, pageable: Pageable?): Page<Property> {
         val locationsByCity: List<Location> = locationService.findByCity(city)
         return propertyRepository.findAllByLocationIn(locationsByCity, pageable)
+    }
+
+    private fun listPropertiesByCityAndType(city: String, type: String, pageable: Pageable?): Page<Property> {
+        val locationsByCity: List<Location> = locationService.findByCity(city)
+        return propertyRepository.findAllByLocationInAndType(locationsByCity, type, pageable)
     }
 
     override fun findById(id: UUID): PropertyDTO {

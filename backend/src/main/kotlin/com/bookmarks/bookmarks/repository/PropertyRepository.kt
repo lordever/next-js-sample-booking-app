@@ -12,4 +12,5 @@ import java.util.*
 interface PropertyRepository : JpaRepository<Property, UUID> {
     fun findAllByType(type: String, pageable: Pageable?): Page<Property>
     fun findAllByLocationIn(location: List<Location>, pageable: Pageable?): Page<Property>
+    fun findAllByLocationInAndType(location: List<Location>, type: String, pageable: Pageable?): Page<Property>
 }
