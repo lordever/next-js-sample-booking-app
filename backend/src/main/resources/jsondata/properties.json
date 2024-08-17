@@ -290,5 +290,298 @@
       "monthly": 2100
     },
     "images": ["j1.jpg", "j2.jpg", "j3.jpg"]
+  },
+  {
+    "owner": "8",
+    "name": "Beachfront Paradise",
+    "type": "House",
+    "description": "Relax in this luxurious beachfront house with private beach access.",
+    "location": {
+      "street": "789 Ocean Breeze Avenue",
+      "city": "Miami",
+      "state": "FL",
+      "zipcode": "33101"
+    },
+    "beds": 5,
+    "baths": 4,
+    "square_feet": 3200,
+    "amenities": [
+      "Beach Access",
+      "Swimming Pool",
+      "Balcony/Patio",
+      "Smart TV",
+      "Outdoor Grill/BBQ"
+    ],
+    "rates": {
+      "nightly": 600,
+      "weekly": 3000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "9",
+    "name": "Urban Oasis",
+    "type": "Apartment",
+    "description": "Enjoy a serene stay in the heart of the city with modern amenities.",
+    "location": {
+      "street": "234 Cityscape Lane",
+      "city": "Chicago",
+      "state": "IL",
+      "zipcode": "60601"
+    },
+    "beds": 2,
+    "baths": 1,
+    "square_feet": 1300,
+    "amenities": [
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Smart TV",
+      "Balcony/Patio"
+    ],
+    "rates": {
+      "weekly": 800,
+      "monthly": 3100
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "10",
+    "name": "Countryside Retreat",
+    "type": "Cottage Or Cabin",
+    "description": "Escape the city life and enjoy the tranquility of the countryside.",
+    "location": {
+      "street": "456 Meadow Lane",
+      "city": "Austin",
+      "state": "TX",
+      "zipcode": "78701"
+    },
+    "beds": 2,
+    "baths": 2,
+    "square_feet": 1600,
+    "amenities": [
+      "Fireplace",
+      "Outdoor Grill/BBQ",
+      "Balcony/Patio",
+      "Coffee Maker"
+    ],
+    "rates": {
+      "weekly": 1500,
+      "monthly": 5000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "11",
+    "name": "Luxury Penthouse Suite",
+    "type": "Apartment",
+    "description": "Experience top-floor luxury in this stunning penthouse suite.",
+    "location": {
+      "street": "678 Skyline Avenue",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10001"
+    },
+    "beds": 3,
+    "baths": 2,
+    "square_feet": 2500,
+    "amenities": [
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Smart TV",
+      "Balcony/Patio",
+      "Gym/Fitness Center"
+    ],
+    "rates": {
+      "weekly": 3000,
+      "monthly": 12000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "12",
+    "name": "Coastal Getaway",
+    "type": "House",
+    "description": "Enjoy the coastal breeze and scenic views in this lovely beach house.",
+    "location": {
+      "street": "123 Seaside Lane",
+      "city": "Miami",
+      "state": "FL",
+      "zipcode": "33101"
+    },
+    "beds": 4,
+    "baths": 3,
+    "square_feet": 2900,
+    "amenities": [
+      "Beach Access",
+      "Swimming Pool",
+      "Balcony/Patio",
+      "Smart TV",
+      "Outdoor Grill/BBQ"
+    ],
+    "rates": {
+      "nightly": 550,
+      "weekly": 2800
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "13",
+    "name": "Central Park View",
+    "type": "Apartment",
+    "description": "A stunning apartment with a view of Central Park.",
+    "location": {
+      "street": "789 Park Avenue",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10001"
+    },
+    "beds": 2,
+    "baths": 1,
+    "square_feet": 1700,
+    "amenities": [
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Smart TV",
+      "Balcony/Patio",
+      "24/7 Security"
+    ],
+    "rates": {
+      "weekly": 2500,
+      "monthly": 9000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "14",
+    "name": "Chic Downtown Condo",
+    "type": "Condo",
+    "description": "Enjoy city life in this chic downtown condo with modern amenities.",
+    "location": {
+      "street": "321 Fashion Street",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipcode": "90001"
+    },
+    "beds": 1,
+    "baths": 1,
+    "square_feet": 950,
+    "amenities": [
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Smart TV",
+      "Gym/Fitness Center"
+    ],
+    "rates": {
+      "weekly": 1200,
+      "monthly": 4500
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "15",
+    "name": "Sunny Beachside Bungalow",
+    "type": "Cottage Or Cabin",
+    "description": "Enjoy the sun and sand in this cozy beachside bungalow.",
+    "location": {
+      "street": "456 Sunny Shore",
+      "city": "Miami",
+      "state": "FL",
+      "zipcode": "33101"
+    },
+    "beds": 2,
+    "baths": 1,
+    "square_feet": 1200,
+    "amenities": [
+      "Beach Access",
+      "Balcony/Patio",
+      "Outdoor Grill/BBQ",
+      "Pet-Friendly"
+    ],
+    "rates": {
+      "weekly": 2000,
+      "monthly": 7500
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "16",
+    "name": "Elegant Uptown Apartment",
+    "type": "Apartment",
+    "description": "Live in elegance in this beautifully furnished uptown apartment.",
+    "location": {
+      "street": "890 Uptown Boulevard",
+      "city": "New York",
+      "state": "NY",
+      "zipcode": "10001"
+    },
+    "beds": 3,
+    "baths": 2,
+    "square_feet": 2100,
+    "amenities": [
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Smart TV",
+      "Balcony/Patio",
+      "24/7 Security",
+      "Elevator Access"
+    ],
+    "rates": {
+      "weekly": 3500,
+      "monthly": 14000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "17",
+    "name": "Hollywood Hills Hideaway",
+    "type": "House",
+    "description": "Escape the hustle and bustle in this secluded hideaway in the Hollywood Hills.",
+    "location": {
+      "street": "123 Hollywood Drive",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipcode": "90001"
+    },
+    "beds": 4,
+    "baths": 3,
+    "square_feet": 2500,
+    "amenities": [
+      "Swimming Pool",
+      "Hot Tub",
+      "Balcony/Patio",
+      "Smart TV",
+      "Outdoor Grill/BBQ"
+    ],
+    "rates": {
+      "weekly": 4000,
+      "monthly": 15000
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
+  },
+  {
+    "owner": "18",
+    "name": "Aspen Alpine Retreat",
+    "type": "Chalet",
+    "description": "Cozy up in this charming alpine retreat in the heart of Aspen.",
+    "location": {
+      "street": "456 Alpine Way",
+      "city": "Aspen",
+      "state": "CO",
+      "zipcode": "81611"
+    },
+    "beds": 3,
+    "baths": 2,
+    "square_feet": 1900,
+    "amenities": [
+      "Ski Equipment Storage",
+      "Fireplace",
+      "Balcony/Patio",
+      "Smart TV"
+    ],
+    "rates": {
+      "nightly": 350,
+      "weekly": 1300
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"]
   }
 ]
