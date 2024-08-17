@@ -29,11 +29,11 @@ class PropertyController(private val propertyService: PropertyService) {
 
     @GetMapping(BASE_PROPERTIES_PATH)
     fun listProperties(
-        @RequestParam(required = false) location: String?,
+        @RequestParam(required = false) city: String?,
         @RequestParam(required = false) type: String?,
         @RequestParam(required = false) page: Int?,
         @RequestParam(required = false) pageSize: Int?
     ): Page<PropertyDTO> {
-        return propertyService.findAll(location, type, page ?: 0, pageSize ?: 10)
+        return propertyService.findAll(city, type, page ?: 0, pageSize ?: 10)
     }
 }

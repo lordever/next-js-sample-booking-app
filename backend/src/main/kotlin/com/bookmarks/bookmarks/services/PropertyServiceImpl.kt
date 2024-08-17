@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.util.StringUtils
 import java.util.*
 
 @Service
@@ -24,14 +25,18 @@ class PropertyServiceImpl(
         const val DEFAULT_PAGE_SIZE = 5
     }
 
-    override fun findAll(location: String?, type: String?, pageNumber: Int?, pageSize: Int?): Page<PropertyDTO> {
+    override fun findAll(city: String?, type: String?, pageNumber: Int?, pageSize: Int?): Page<PropertyDTO> {
         val pageRequest = buildPageRequest(pageNumber, pageSize)
 
-        val propertyPage: Page<Property> = if (type != null) {
-            listPropertiesByType(type, pageRequest)
-        } else {
-            propertyRepository.findAll(pageRequest)
-        }
+        val propertyPage: Page<Property> =
+            if (type == null && city != null && StringUtils.hasText(city)) {
+                listPropertiesByCity(city, pageRequest)
+            } else
+                if (city == null && type != null) {
+                    listPropertiesByType(type, pageRequest)
+                } else {
+                    propertyRepository.findAll(pageRequest)
+                }
 
         return propertyPage.map(propertyMapper::toDTO)
     }
