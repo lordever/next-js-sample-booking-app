@@ -4,6 +4,7 @@ import com.bookmarks.bookmarks.entities.Location
 import com.bookmarks.bookmarks.entities.Property
 import com.bookmarks.bookmarks.repository.LocationRepository
 import com.bookmarks.bookmarks.repository.PropertyRepository
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -53,5 +54,16 @@ class LocationRepositoryTest {
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Property should be found in the database")
         assertEquals(savedLocation.id, fetchedProperty?.location?.id, "Property should be associated with the correct Location")
+    }
+
+    @Transactional
+    @Test
+    fun testLocationByZipCode() {
+        val zipcode = "19101"
+
+        val locationsByZipCode = locationRepository.findByZipcode(zipcode)
+
+        assertThat(locationsByZipCode).isNotEmpty
+        locationsByZipCode.forEach { location -> assertEquals(zipcode, location.zipcode) }
     }
 }

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface LocationRepository: JpaRepository<Location, UUID> {
+interface LocationRepository : JpaRepository<Location, UUID> {
+    fun findByZipcode(zipcode: String): List<Location>
 }
