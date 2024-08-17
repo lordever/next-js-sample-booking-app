@@ -1,5 +1,6 @@
 package com.bookmarks.bookmarks.services
 
+import com.bookmarks.bookmarks.entities.Location
 import com.bookmarks.bookmarks.entities.Property
 import com.bookmarks.bookmarks.mappers.PropertyMapper
 import com.bookmarks.bookmarks.models.dto.PropertyDTO
@@ -14,7 +15,8 @@ import java.util.*
 @Service
 class PropertyServiceImpl(
     private val propertyRepository: PropertyRepository,
-    private val propertyMapper: PropertyMapper
+    private val propertyMapper: PropertyMapper,
+    private val locationService: LocationService
 ) : PropertyService {
 
     companion object {
@@ -61,6 +63,11 @@ class PropertyServiceImpl(
 
     private fun listPropertiesByType(type: String, pageable: Pageable?): Page<Property> {
         return propertyRepository.findAllByType(type, pageable)
+    }
+
+    private fun listPropertiesByCity(city: String, pageable: Pageable?): Page<Property> {
+        val locationsByCity: List<Location> = locationService.findByCity(city)
+        return propertyRepository.findAllByLocationIn(locationsByCity, pageable)
     }
 
     override fun findById(id: UUID): PropertyDTO {
