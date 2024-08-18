@@ -7,8 +7,10 @@ import com.bookmarks.bookmarks.repository.LocationRepository
 import org.springframework.stereotype.Service
 
 @Service
-class LocationServiceImpl(val locationRepository: LocationRepository, val locationMapper: LocationMapper) :
-    LocationService {
+class LocationServiceImpl(
+    val locationRepository: LocationRepository,
+    val locationMapper: LocationMapper
+) : LocationService {
     override fun findAll(): List<LocationDTO> {
         val locations = locationRepository.findAll()
         return locations.map(locationMapper::toDTO)
@@ -16,5 +18,10 @@ class LocationServiceImpl(val locationRepository: LocationRepository, val locati
 
     override fun findByCity(city: String): List<Location> {
         return locationRepository.findByCity(city)
+    }
+
+    override fun findByFullAddress(fullAddress: String): List<Location> {
+        val formattedFullAddress = fullAddress.replace("\\s".toRegex(), "%")
+        return locationRepository.findByFullAddressContaining("%$formattedFullAddress%")
     }
 }

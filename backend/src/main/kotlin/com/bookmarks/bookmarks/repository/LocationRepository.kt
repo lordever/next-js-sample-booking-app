@@ -8,4 +8,5 @@ import java.util.*
 @Repository
 interface LocationRepository : JpaRepository<Location, UUID> {
     fun findByCity(city: String): List<Location>
+    fun findByFullAddressContaining(fullAddress: String): List<Location>
 }

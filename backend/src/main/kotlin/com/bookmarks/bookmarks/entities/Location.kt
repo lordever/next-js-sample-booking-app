@@ -11,13 +11,15 @@ data class Location(
     var street: String? = null,
     var state: String? = null,
     var zipcode: String? = null,
-    var full_text: String? = null,
 
     @field:Id
     @field:GeneratedValue(generator = "UUID")
     @field:JdbcTypeCode(SqlTypes.CHAR)
     @field:Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     var id: UUID? = null,
+
+    @Column(name = "full_address")
+    val fullAddress: String? = null,
 ) {
     @field:OneToMany(mappedBy = "location", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
     var property: MutableSet<Property>? = mutableSetOf()

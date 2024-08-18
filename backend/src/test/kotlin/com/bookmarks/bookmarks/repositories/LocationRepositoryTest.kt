@@ -49,11 +49,19 @@ class LocationRepositoryTest {
 
         val fetchedLocation = locationRepository.findById(savedLocation.id!!).orElse(null)
         assertNotNull(fetchedLocation, "Location should be found in the database")
-        assertEquals(testSavedProperty.id, fetchedLocation?.property?.firstOrNull()?.id, "Location should be associated with the correct Property")
+        assertEquals(
+            testSavedProperty.id,
+            fetchedLocation?.property?.firstOrNull()?.id,
+            "Location should be associated with the correct Property"
+        )
 
         val fetchedProperty = propertyRepository.findById(testSavedProperty.id!!).orElse(null)
         assertNotNull(fetchedProperty, "Property should be found in the database")
-        assertEquals(savedLocation.id, fetchedProperty?.location?.id, "Property should be associated with the correct Location")
+        assertEquals(
+            savedLocation.id,
+            fetchedProperty?.location?.id,
+            "Property should be associated with the correct Location"
+        )
     }
 
     @Transactional
@@ -65,5 +73,21 @@ class LocationRepositoryTest {
 
         assertThat(locationsByCity).isNotEmpty
         locationsByCity.forEach { location -> assertEquals(city, location.city) }
+    }
+
+    @Transactional
+    @Test
+    fun testLocationByFullAddressContaining() {
+        val city = "Denver"
+        val street = "Lane"
+        val fullAddress = "$street $city"
+
+        val locationsByFullAddress = locationRepository.findByFullAddressContaining(fullAddress)
+
+        assertThat(locationsByFullAddress).isNotEmpty
+        locationsByFullAddress.forEach { location ->
+            assertEquals(city, location.city)
+            location.street?.contains(street)?.or(false)?.let { assertTrue(it) }
+        }
     }
 }

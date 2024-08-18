@@ -5,5 +5,5 @@ data class LocationJSONRecord(
     var city: String? = null,
     var state: String? = null,
     var zipcode: String? = null,
-    var full_text: String? = null,
+    var full_address: String? = null,
 )

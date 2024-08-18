@@ -8,5 +8,5 @@ data class LocationDTO(
     var city: String? = null,
     var state: String? = null,
     var zipcode: String? = null,
-    var fullText: String? = null,
+    var fullAddress: String? = null,
 )

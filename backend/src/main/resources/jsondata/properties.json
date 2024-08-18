@@ -9,7 +9,7 @@
       "city": "Boston",
       "state": "MA",
       "zipcode": "02108",
-      "full_text": "120 Tremont Street Boston MA 02108"
+      "full_address": "120 Tremont Street Boston MA 02108"
     },
     "beds": 2,
     "baths": 1,
@@ -46,7 +46,7 @@
       "city": "New York",
       "state": "NY",
       "zipcode": "10001",
-      "full_text": "45 Main Street New York NY 10001"
+      "full_address": "45 Main Street New York NY 10001"
     },
     "beds": 1,
     "baths": 1,
@@ -82,7 +82,7 @@
       "city": "Los Angeles",
       "state": "CA",
       "zipcode": "90001",
-      "full_text": "500 Lux Lane Los Angeles CA 90001"
+      "full_address": "500 Lux Lane Los Angeles CA 90001"
     },
     "beds": 3,
     "baths": 2,
@@ -120,7 +120,7 @@
       "city": "Austin",
       "state": "TX",
       "zipcode": "78701",
-      "full_text": "123 Countryside Lane Austin TX 78701"
+      "full_address": "123 Countryside Lane Austin TX 78701"
     },
     "beds": 1,
     "baths": 1,
@@ -146,7 +146,7 @@
       "city": "Chicago",
       "state": "IL",
       "zipcode": "60601",
-      "full_text": "75 Urban Avenue Chicago IL 60601"
+      "full_address": "75 Urban Avenue Chicago IL 60601"
     },
     "beds": 1,
     "baths": 1,
@@ -174,7 +174,7 @@
       "city": "Miami",
       "state": "FL",
       "zipcode": "33101",
-      "full_text": "456 Oceanfront Drive Miami FL 33101"
+      "full_address": "456 Oceanfront Drive Miami FL 33101"
     },
     "beds": 4,
     "baths": 3,
@@ -202,7 +202,7 @@
       "city": "Denver",
       "state": "CO",
       "zipcode": "80201",
-      "full_text": "789 Forest Lane Denver CO 80201"
+      "full_address": "789 Forest Lane Denver CO 80201"
     },
     "beds": 2,
     "baths": 1,
@@ -229,7 +229,7 @@
       "city": "Aspen",
       "state": "CO",
       "zipcode": "81611",
-      "full_text": "321 Mountain Road Aspen CO 81611"
+      "full_address": "321 Mountain Road Aspen CO 81611"
     },
     "beds": 3,
     "baths": 2,
@@ -256,7 +256,7 @@
       "city": "Boulder",
       "state": "CO",
       "zipcode": "80301",
-      "full_text": "600 Summit Drive Boulder CO 80301"
+      "full_address": "600 Summit Drive Boulder CO 80301"
     },
     "beds": 4,
     "baths": 3,
@@ -284,7 +284,7 @@
       "city": "Philadelphia",
       "state": "PA",
       "zipcode": "19101",
-      "full_text": "123 History Lane Philadelphia PA 19101"
+      "full_address": "123 History Lane Philadelphia PA 19101"
     },
     "beds": 2,
     "baths": 1,
@@ -311,7 +311,7 @@
       "city": "Miami",
       "state": "FL",
       "zipcode": "33101",
-      "full_text": "789 Ocean Breeze Avenue Miami FL 33101"
+      "full_address": "789 Ocean Breeze Avenue Miami FL 33101"
     },
     "beds": 5,
     "baths": 4,
@@ -339,7 +339,7 @@
       "city": "Chicago",
       "state": "IL",
       "zipcode": "60601",
-      "full_text": "234 Cityscape Lane Chicago IL 60601"
+      "full_address": "234 Cityscape Lane Chicago IL 60601"
     },
     "beds": 2,
     "baths": 1,
@@ -366,7 +366,7 @@
       "city": "Austin",
       "state": "TX",
       "zipcode": "78701",
-      "full_text": "456 Meadow Lane Austin TX 78701"
+      "full_address": "456 Meadow Lane Austin TX 78701"
     },
     "beds": 2,
     "baths": 2,
@@ -393,7 +393,7 @@
       "city": "New York",
       "state": "NY",
       "zipcode": "10001",
-      "full_text": "678 Skyline Avenue New York NY 10001"
+      "full_address": "678 Skyline Avenue New York NY 10001"
     },
     "beds": 3,
     "baths": 2,
@@ -421,7 +421,7 @@
       "city": "Miami",
       "state": "FL",
       "zipcode": "33101",
-      "full_text": "123 Seaside Lane Miami FL 33101"
+      "full_address": "123 Seaside Lane Miami FL 33101"
     },
     "beds": 4,
     "baths": 3,
@@ -449,7 +449,7 @@
       "city": "New York",
       "state": "NY",
       "zipcode": "10001",
-      "full_text": "789 Park Avenue New York NY 10001"
+      "full_address": "789 Park Avenue New York NY 10001"
     },
     "beds": 2,
     "baths": 1,
@@ -477,7 +477,7 @@
       "city": "Los Angeles",
       "state": "CA",
       "zipcode": "90001",
-      "full_text": "321 Fashion Street Los Angeles CA 90001"
+      "full_address": "321 Fashion Street Los Angeles CA 90001"
     },
     "beds": 1,
     "baths": 1,
@@ -504,7 +504,7 @@
       "city": "Miami",
       "state": "FL",
       "zipcode": "33101",
-      "full_text": "456 Sunny Shore Miami FL 33101"
+      "full_address": "456 Sunny Shore Miami FL 33101"
     },
     "beds": 2,
     "baths": 1,
@@ -531,7 +531,7 @@
       "city": "New York",
       "state": "NY",
       "zipcode": "10001",
-      "full_text": "890 Uptown Boulevard New York NY 10001"
+      "full_address": "890 Uptown Boulevard New York NY 10001"
     },
     "beds": 3,
     "baths": 2,
@@ -560,7 +560,7 @@
       "city": "Los Angeles",
       "state": "CA",
       "zipcode": "90001",
-      "full_text": "123 Hollywood Drive Los Angeles CA 90001"
+      "full_address": "123 Hollywood Drive Los Angeles CA 90001"
     },
     "beds": 4,
     "baths": 3,
@@ -588,7 +588,7 @@
       "city": "Aspen",
       "state": "CO",
       "zipcode": "81611",
-      "full_text": "456 Alpine Way Aspen CO 81611"
+      "full_address": "456 Alpine Way Aspen CO 81611"
     },
     "beds": 3,
     "baths": 2,

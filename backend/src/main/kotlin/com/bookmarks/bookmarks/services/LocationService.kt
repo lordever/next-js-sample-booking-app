@@ -6,4 +6,5 @@ import com.bookmarks.bookmarks.models.dto.LocationDTO
 interface LocationService {
     fun findAll(): List<LocationDTO>
     fun findByCity(city: String): List<Location>
+    fun findByFullAddress(fullAddress: String): List<Location>
 }
