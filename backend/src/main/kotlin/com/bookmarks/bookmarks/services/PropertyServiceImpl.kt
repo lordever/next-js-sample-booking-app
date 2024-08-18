@@ -3,6 +3,7 @@ package com.bookmarks.bookmarks.services
 import com.bookmarks.bookmarks.entities.Location
 import com.bookmarks.bookmarks.entities.Property
 import com.bookmarks.bookmarks.mappers.PropertyMapper
+import com.bookmarks.bookmarks.models.PropertiesFilter
 import com.bookmarks.bookmarks.models.dto.PropertyDTO
 import com.bookmarks.bookmarks.repository.PropertyRepository
 import org.springframework.data.domain.Page
@@ -25,21 +26,30 @@ class PropertyServiceImpl(
         const val DEFAULT_PAGE_SIZE = 5
     }
 
-    override fun findAll(city: String?, type: String?, pageNumber: Int?, pageSize: Int?): Page<PropertyDTO> {
-        val pageRequest = buildPageRequest(pageNumber, pageSize)
+    override fun findAll(propertiesFilter: PropertiesFilter): Page<PropertyDTO> {
+        val pageRequest = buildPageRequest(propertiesFilter.page, propertiesFilter.pageSize)
+        val type = propertiesFilter.type
+        val city = propertiesFilter.city
+        val fullAddress = propertiesFilter.fullAddress
 
         val propertyPage: Page<Property> =
-            if (type != null && city != null) {
-                listPropertiesByCityAndType(city, type, pageRequest)
+            if (type != null && fullAddress != null) {
+                listPropertiesByFullAddressAndType(fullAddress, type, pageRequest)
             } else
-                if (type == null && city != null && StringUtils.hasText(city)) {
-                    listPropertiesByCity(city, pageRequest)
+                if (type == null && fullAddress != null) {
+                    listPropertiesByFullAddress(fullAddress, pageRequest)
                 } else
-                    if (city == null && type != null) {
-                        listPropertiesByType(type, pageRequest)
-                    } else {
-                        propertyRepository.findAll(pageRequest)
-                    }
+                    if (type != null && city != null) {
+                        listPropertiesByCityAndType(city, type, pageRequest)
+                    } else
+                        if (type == null && city != null && StringUtils.hasText(city)) {
+                            listPropertiesByCity(city, pageRequest)
+                        } else
+                            if (city == null && type != null) {
+                                listPropertiesByType(type, pageRequest)
+                            } else {
+                                propertyRepository.findAll(pageRequest)
+                            }
 
         return propertyPage.map(propertyMapper::toDTO)
     }
@@ -67,6 +77,20 @@ class PropertyServiceImpl(
         val sort: Sort = Sort.by(Sort.Order.asc("name"))
 
         return PageRequest.of(queryPageNumber, queryPageSize, sort)
+    }
+
+    private fun listPropertiesByFullAddressAndType(
+        fullAddress: String,
+        type: String,
+        pageable: Pageable?
+    ): Page<Property> {
+        val locationsByFullAddress: List<Location> = locationService.findByFullAddress(fullAddress)
+        return propertyRepository.findAllByLocationInAndType(locationsByFullAddress, type, pageable)
+    }
+
+    private fun listPropertiesByFullAddress(fullAddress: String, pageable: Pageable?): Page<Property> {
+        val locationsByFullAddress: List<Location> = locationService.findByFullAddress(fullAddress)
+        return propertyRepository.findAllByLocationIn(locationsByFullAddress, pageable)
     }
 
     private fun listPropertiesByType(type: String, pageable: Pageable?): Page<Property> {

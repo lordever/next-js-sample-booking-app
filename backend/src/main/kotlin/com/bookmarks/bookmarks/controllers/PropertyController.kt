@@ -1,10 +1,10 @@
 package com.bookmarks.bookmarks.controllers
 
+import com.bookmarks.bookmarks.models.PropertiesFilter
 import com.bookmarks.bookmarks.models.dto.PropertyDTO
 import com.bookmarks.bookmarks.services.PropertyService
 import mu.KotlinLogging
 import org.springframework.data.domain.Page
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
@@ -30,10 +30,19 @@ class PropertyController(private val propertyService: PropertyService) {
     @GetMapping(BASE_PROPERTIES_PATH)
     fun listProperties(
         @RequestParam(required = false) city: String?,
+        @RequestParam(required = false) fullAddress: String?,
         @RequestParam(required = false) type: String?,
         @RequestParam(required = false) page: Int?,
         @RequestParam(required = false) pageSize: Int?
     ): Page<PropertyDTO> {
-        return propertyService.findAll(city, type, page ?: 0, pageSize ?: 10)
+        val propertiesFilter = PropertiesFilter(
+            city = city,
+            fullAddress = fullAddress,
+            type = type,
+            page = page ?: 0,
+            pageSize = pageSize ?: 10
+        )
+
+        return propertyService.findAll(propertiesFilter)
     }
 }

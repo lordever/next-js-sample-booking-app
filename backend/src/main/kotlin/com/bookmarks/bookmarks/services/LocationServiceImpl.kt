@@ -21,7 +21,6 @@ class LocationServiceImpl(
     }
 
     override fun findByFullAddress(fullAddress: String): List<Location> {
-        val formattedFullAddress = fullAddress.replace("\\s".toRegex(), "%")
-        return locationRepository.findByFullAddressContaining("%$formattedFullAddress%")
+        return locationRepository.findByFullAddressContaining(fullAddress)
     }
 }

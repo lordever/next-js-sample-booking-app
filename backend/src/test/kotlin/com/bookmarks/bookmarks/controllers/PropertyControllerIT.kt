@@ -35,7 +35,7 @@ class PropertyControllerIT {
     @Test
     @Transactional
     fun testGetAllProperties() {
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, null, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(10)
     }
@@ -43,7 +43,7 @@ class PropertyControllerIT {
     @Test
     @Transactional
     fun testGetAllPropertiesIfPageSizeIsFive() {
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, null, 5)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, null, null, 5)
 
         assertThat(listProperties.content.size).isEqualTo(5)
     }
@@ -52,7 +52,7 @@ class PropertyControllerIT {
     @Transactional
     fun testGetAllPropertiesByType() {
         val testType = "Apartment"
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, testType, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, testType, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(7)
 
@@ -63,7 +63,7 @@ class PropertyControllerIT {
     @Transactional
     fun testGetAllPropertiesByBadType() {
         val testType = "INCORRECT TYPE"
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, testType, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, null, testType, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(0)
     }
@@ -72,7 +72,7 @@ class PropertyControllerIT {
     @Transactional
     fun testGetAllPropertiesByCity() {
         val testCity = "Philadelphia"
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, null, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(1)
 
@@ -89,7 +89,7 @@ class PropertyControllerIT {
     @Transactional
     fun testGetAllPropertiesByBadCity() {
         val testCity = "BAD CITY"
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, null, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(0)
     }
@@ -100,7 +100,7 @@ class PropertyControllerIT {
         val testType = "Condo"
         val testCity = "Los Angeles"
 
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, testType, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, testType, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(2)
 
@@ -121,7 +121,69 @@ class PropertyControllerIT {
         val testType = "BAD TYPE"
         val testCity = "BAD CITY"
 
-        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, testType, null, null)
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(testCity, null, testType, null, null)
+
+        assertThat(listProperties.content.size).isEqualTo(0)
+    }
+
+    @Test
+    @Transactional
+    fun testGetAllPropertiesByFullAddress() {
+        val city = "Denver"
+        val street = "Lane"
+        val fullAddress = "$street $city"
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, fullAddress, null, null, null)
+
+        assertThat(listProperties.content.size).isEqualTo(1)
+
+        listProperties.content.forEach { property ->
+            val locations = property.location?.city?.let { locationRepository.findByCity(it) }
+            assertThat(locations).isNotNull
+            assertThat(locations).isNotEmpty
+
+            locations?.forEach { location -> assertThat(location.city).isEqualTo(city) }
+        }
+    }
+
+    @Test
+    @Transactional
+    fun testGetAllPropertiesByBadFullAddress() {
+        val fullAddress = "BAD CITY"
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, fullAddress, null, null, null)
+
+        assertThat(listProperties.content.size).isEqualTo(0)
+    }
+
+    @Test
+    @Transactional
+    fun testGetAllPropertiesByFullAddressAndType() {
+        val city = "Los Angeles"
+        val street = "Fashion Street"
+        val fullAddress = "$street $city"
+        val testType = "Condo"
+
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, fullAddress, testType, null, null)
+
+        assertThat(listProperties.content.size).isEqualTo(1)
+
+        listProperties.content.forEach { property ->
+            assertThat(property.type).isEqualTo(testType)
+
+            val propertyLocations = property.location?.city?.let { locationRepository.findByCity(it) }
+            assertThat(propertyLocations).isNotNull
+            assertThat(propertyLocations).isNotEmpty
+
+            propertyLocations?.forEach { location -> assertThat(location.city).isEqualTo(city) }
+        }
+    }
+
+    @Test
+    @Transactional
+    fun testGetAllPropertiesByBadFullAddressAndBadType() {
+        val testType = "BAD TYPE"
+        val testFullAddress = "BAD CITY"
+
+        val listProperties: Page<PropertyDTO> = propertyController.listProperties(null, testFullAddress, testType, null, null)
 
         assertThat(listProperties.content.size).isEqualTo(0)
     }
