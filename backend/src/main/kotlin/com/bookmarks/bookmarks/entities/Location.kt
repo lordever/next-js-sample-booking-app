@@ -11,6 +11,7 @@ data class Location(
     var street: String? = null,
     var state: String? = null,
     var zipcode: String? = null,
+    var full_text: String? = null,
 
     @field:Id
     @field:GeneratedValue(generator = "UUID")
