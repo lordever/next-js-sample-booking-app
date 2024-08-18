@@ -90,4 +90,15 @@ class LocationRepositoryTest {
             location.street?.contains(street)?.or(false)?.let { assertTrue(it) }
         }
     }
+
+    @Test
+    fun testLocationByFullAddressContainingWhereCityIsInCorrect() {
+        val city = "BAD_CITY"
+        val street = "Lane"
+        val fullAddress = "$street $city"
+
+        val locationsByFullAddress = locationRepository.findByFullAddressContaining(fullAddress)
+
+        assertThat(locationsByFullAddress).isEmpty()
+    }
 }

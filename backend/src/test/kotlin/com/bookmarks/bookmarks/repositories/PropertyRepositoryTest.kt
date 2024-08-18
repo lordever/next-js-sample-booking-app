@@ -21,7 +21,7 @@ class PropertyRepositoryTest {
 
         val properties = propertyRepository.findAllByType(testType, null)
 
-        assertThat(properties).hasSize(2)
+        assertThat(properties).hasSize(7)
     }
 
     @Test
