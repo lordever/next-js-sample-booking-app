@@ -1,4 +1,5 @@
 const API_DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN || null;
+const BACKEND_API_DOMAIN = process.env.NEXT_PUBLIC_BACKEND_API_DOMAIN || null;
 
 interface FetchPropertiesArgs {
   page?: number;
@@ -13,13 +14,13 @@ export async function fetchProperties({
 }: FetchPropertiesArgs = {}) {
   try {
     //Handle the case when domain is not available yet
-    if (!API_DOMAIN) {
+    if (!API_DOMAIN || !BACKEND_API_DOMAIN) {
       return [];
     }
 
     const apiUrl = showFeatured
-      ? `${API_DOMAIN}/properties/featured?page=${page}&pageSize=${pageSize}`
-      : `${API_DOMAIN}/properties?page=${page}&pageSize=${pageSize}`;
+      ? `${BACKEND_API_DOMAIN}/v1/properties?page=${page}&pageSize=${pageSize}` //TODO: need implement featured properties
+      : `${BACKEND_API_DOMAIN}/v1/properties?page=${page}&pageSize=${pageSize}`;
 
     const res = await fetch(apiUrl, { cache: 'no-store' });
 
