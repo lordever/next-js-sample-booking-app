@@ -39,8 +39,8 @@ class PropertyController(private val propertyService: PropertyService) {
             city = city,
             fullAddress = fullAddress,
             type = type,
-            page = page ?: 0,
-            pageSize = pageSize ?: 10
+            page = page,
+            pageSize = pageSize
         )
 
         return propertyService.findAll(propertiesFilter)
