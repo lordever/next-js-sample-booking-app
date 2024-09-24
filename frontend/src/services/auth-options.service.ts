@@ -6,9 +6,21 @@ import connectDB from '@/config/database';
 const callbacks: {
   session({ session }: { session: any }): Promise<Session>;
   signIn({ profile }: { profile: any }): Promise<boolean>;
+  jwt({
+    token,
+    session,
+    profile,
+  }: {
+    token: any;
+    session: any;
+    profile: any;
+  }): Promise<boolean>;
 } = {
   // Invoked on successfully sign in
-  async signIn({ profile }) {
+  async signIn(data) {
+    console.log('DATA', data);
+
+    const profile = data.profile;
     if (!profile) {
       return false;
     }
@@ -32,6 +44,10 @@ const callbacks: {
 
     //4. Return true to allow sign in
     return true;
+  },
+  async jwt(data) {
+    // do some stuff
+    return data.token;
   },
   //Modifies the session object
   async session({ session }) {

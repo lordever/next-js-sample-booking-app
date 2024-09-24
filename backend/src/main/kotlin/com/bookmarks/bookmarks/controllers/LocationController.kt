@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class LocationController(private val locationService: LocationService) {
     companion object {
-        const val BASE_LOCATION_PATH = "/api/v1/locations"
+        const val BASE_LOCATION_PATH = "/public/api/v1/locations"
         const val LOCATION_PATH_WITH_ID = "$BASE_LOCATION_PATH/{id}"
     }
 

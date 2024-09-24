@@ -14,7 +14,7 @@ class SecurityConfig {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { authorize ->
             authorize
-                .requestMatchers("/api/v1/properties").permitAll()
+                .requestMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
         }.oauth2ResourceServer { configurer ->
             configurer.jwt(Customizer.withDefaults())

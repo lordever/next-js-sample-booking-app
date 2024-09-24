@@ -16,7 +16,7 @@ class PropertyController(private val propertyService: PropertyService) {
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        const val BASE_PROPERTIES_PATH = "/api/v1/properties"
+        const val BASE_PROPERTIES_PATH = "/public/api/v1/properties"
         const val PROPERTIES_PATH_WITH_ID = "$BASE_PROPERTIES_PATH/{id}"
     }
 
