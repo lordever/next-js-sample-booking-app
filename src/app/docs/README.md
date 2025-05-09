@@ -1,0 +1,1 @@
+This is simple example of `catch-all` and `optional catch-all` routes  
