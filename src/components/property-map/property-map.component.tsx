@@ -6,7 +6,7 @@ import Map, { Marker } from 'react-map-gl';
 import { setDefaults, fromAddress } from 'react-geocode';
 import Image from 'next/image';
 import pin from '../../assets/images/pin.svg';
-import { PropertyModel } from '../../models/property.model';
+import { PropertyModel } from '@/models/property.model';
 import Spinner from '../spinner/spinner.component';
 
 interface PropertyMapProps {

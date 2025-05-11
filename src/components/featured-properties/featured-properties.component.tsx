@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchProperties } from '../../services/property.service';
+import { fetchProperties } from '../../utils/property.utils';
 import FeaturedPropertyCard from '../featured-property-card/featured-property-card.component';
 import { PropertyModel } from '../../models/property.model';
 

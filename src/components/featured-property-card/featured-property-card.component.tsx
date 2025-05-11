@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { PropertyModel } from '../../models/property.model';
 import Link from 'next/link';
-import { getRateDisplay } from '../../services/rate.service';
+import { getRateDisplay } from '../../utils/rate.utils';
 import {
   FaBed,
   FaBath,

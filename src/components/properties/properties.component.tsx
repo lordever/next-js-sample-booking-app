@@ -3,7 +3,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { PropertyModel } from '@/models/property.model';
 import PropertyCard from '../property-card/property.card.component';
-import { fetchProperties } from '@/services/property.service';
+import { fetchProperties } from '@/utils/property.utils';
 import { toast } from 'react-toastify';
 import Spinner from '../spinner/spinner.component';
 import Pagination from '../pagination/pagination.component';

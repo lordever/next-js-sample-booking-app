@@ -1,5 +1,7 @@
+'use client';
+
 import React, { FC, useEffect, useState } from 'react';
-import { PropertyModel } from '../../models/property.model';
+import { PropertyModel } from '@/models/property.model';
 import { FaBookmark } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';

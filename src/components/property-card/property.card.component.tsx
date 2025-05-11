@@ -9,7 +9,7 @@ import {
   FaMapMarker,
 } from 'react-icons/fa';
 import Link from 'next/link';
-import { getRateDisplay } from '../../services/rate.service';
+import { getRateDisplay } from '../../utils/rate.utils';
 
 interface PropertyCardProps {
   property: PropertyModel;
