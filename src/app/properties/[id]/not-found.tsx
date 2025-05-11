@@ -5,6 +5,7 @@ const PropertyNotFound = () => (
   <NoRecords
     title="Property Not Found"
     description="The property you are looking for does not exist."
+    info
   />
 );
 
